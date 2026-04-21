@@ -260,7 +260,7 @@ Retail consumers sit at **priority 6-7**. "Consumer protection" is the packaging
 - [Stigler 1971 "The Theory of Economic Regulation"](https://www.jstor.org/stable/3003160)
 - [ESMA MiFID II official overview](https://www.esma.europa.eu/policy-rules/mifid-ii-and-mifir)
 - [CFTC Press Releases](https://www.cftc.gov/PressRoom/PressReleases)
-- [FCA Annual Report](https://www.fca.org.uk/publications/annual-reports)
+- [FCA Publications hub](https://www.fca.org.uk/publications)
 - [My Forex Funds CFTC complaint — Finance Magnates](https://www.financemagnates.com/forex/310-million-prop-trading-fraud-regulators-freeze-assets-of-my-forex-funds/)
 - [MFF case dismissal — DeSilva Law](https://www.desilvalawoffices.com/articles/blog/2025/may/cftc-case-dismissed-my-forex-funds-controversy-h/)
 - [Forex Scandal 2013 — Wikipedia](https://en.wikipedia.org/wiki/Forex_scandal)
