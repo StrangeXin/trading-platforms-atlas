@@ -29,6 +29,7 @@ Each language has the same six sections:
 | `04-relationships/` | Ownership / liquidity / white-label maps | 关系图谱 |
 | `05-trends/` | Current trends & predictions | 当前趋势分析 |
 | `06-research-notes/` | Source index | 原始资料索引 |
+| `07-essentials/` | The essence — what's really going on | 行业本质 —— 真相层 |
 
 ### Platforms covered
 
