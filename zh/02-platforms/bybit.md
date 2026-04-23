@@ -88,6 +88,19 @@ Bybit 跟单交易是旗舰功能，也是重要的用户获取渠道：
 
 ---
 
+## Bybit × Mantle / MNT
+
+Bybit 与 Mantle 的关系是理解 Bybit 当前生态策略的关键：
+
+- **历史来源**：Mantle 从 BitDAO 体系演化而来；Bybit 是 BitDAO 金库最重要的早期贡献方之一。
+- **代币迁移**：2023 年 BitDAO 通过 “One brand, One token” 路线，把 BIT 叙事整合为 Mantle / MNT。
+- **产品接入**：MNT 已接入 Bybit 的手续费折扣、VIP 资产权重、Launchpool / Launchpad / Megadrop、Card / Pay 等场景。
+- **定位区别**：Bybit 是 CEX 和托管账户；Mantle 是以太坊 L2；MNT 是链上 gas / 治理 / 激励资产，也被 Bybit 包装成平台权益资产。
+
+详见关系图谱：[`04-relationships/07-bybit-mantle.md`](../04-relationships/07-bybit-mantle.md)。
+
+---
+
 ## 技术基础设施
 
 ### 撮合引擎
@@ -159,7 +172,7 @@ Bybit 历史上最大的事件：
 | 现货（基础档） | 0.100% | 0.100% |
 | 永续（基础档） | 0.020% | 0.055% |
 
-VIP 档按 30 天成交量和 Bybit Token（BIT）持仓打折。等量级下衍生品费率和 Binance、OKX 相当。
+VIP 档按 30 天成交量、资产规模和 MNT 等平台权益规则打折。等量级下衍生品费率和 Binance、OKX 相当。
 
 ---
 
@@ -185,3 +198,5 @@ VIP 档按 30 天成交量和 Bybit Token（BIT）持仓打折。等量级下衍
 - [Chainalysis — Bybit 被盗分析](https://www.chainalysis.com/blog/bybit-exchange-hack-february-2025-crypto-security-dprk/)
 - [CoinLaw — Bybit Statistics 2026](https://coinlaw.io/bybit-statistics/)
 - [Coin Bureau — Bybit Copy Trading Review](https://coinbureau.com/review/bybit-copy-trading-review)
+- [Bybit — Introduction to the MNT Program](https://www.bybit.com/en/help-center/article/Introduction-to-the-MNT-Program?category=bcaeae54c20e409dbc)
+- [Mantle — Tokenomics](https://docs.mantle.xyz/governance/parameters/tokenomics)

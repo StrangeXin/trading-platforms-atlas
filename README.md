@@ -11,15 +11,15 @@
 - **English**: [`en/`](./en/)
 - **中文**: [`zh/`](./zh/)
 
-Both versions cover the same 41 topics with mirrored directory structure.
+Both versions cover the same 44 topics with mirrored directory structure.
 
-两个版本覆盖相同的 41 个主题，目录结构对称。
+两个版本覆盖相同的 44 个主题，目录结构对称。
 
 ---
 
 ## Structure / 目录结构
 
-Each language has the same six sections:
+Each language has the same seven sections:
 
 | Folder | English | 中文 |
 |---|---|---|

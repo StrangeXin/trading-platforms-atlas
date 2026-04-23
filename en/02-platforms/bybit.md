@@ -88,6 +88,19 @@ Bybit's copy trading is a flagship feature and a significant user acquisition ve
 
 ---
 
+## Bybit × Mantle / MNT
+
+Bybit's relationship with Mantle is central to understanding its current ecosystem strategy:
+
+- **Historical origin**: Mantle evolved out of the BitDAO ecosystem; Bybit was one of the most important early contributors to the BitDAO treasury.
+- **Token migration**: In 2023, BitDAO followed a “One brand, One token” path that consolidated the BIT narrative into Mantle / MNT.
+- **Product integration**: MNT is integrated into Bybit fee discounts, VIP asset weighting, Launchpool / Launchpad / Megadrop, Card / Pay, and other surfaces.
+- **Role distinction**: Bybit is a CEX and custodial account layer; Mantle is an Ethereum L2; MNT is an on-chain gas / governance / incentive asset that Bybit also packages as a platform-benefit asset.
+
+See the relationship map: [`04-relationships/07-bybit-mantle.md`](../04-relationships/07-bybit-mantle.md).
+
+---
+
 ## Technology Infrastructure
 
 ### Matching Engine
@@ -159,7 +172,7 @@ The most significant event in Bybit's history:
 | Spot (base tier) | 0.100% | 0.100% |
 | Perpetuals (base tier) | 0.020% | 0.055% |
 
-VIP tiers reduce fees based on 30-day volume and Bybit Token (BIT) holdings. Derivatives fees are competitive with Binance and OKX at equivalent volume tiers.
+VIP tiers reduce fees based on 30-day volume, asset balance, and MNT-related platform benefit rules. Derivatives fees are competitive with Binance and OKX at equivalent volume tiers.
 
 ---
 
@@ -185,3 +198,5 @@ VIP tiers reduce fees based on 30-day volume and Bybit Token (BIT) holdings. Der
 - [Chainalysis — Bybit theft analysis](https://www.chainalysis.com/blog/bybit-exchange-hack-february-2025-crypto-security-dprk/)
 - [CoinLaw — Bybit Statistics 2026](https://coinlaw.io/bybit-statistics/)
 - [Coin Bureau — Bybit Copy Trading Review](https://coinbureau.com/review/bybit-copy-trading-review)
+- [Bybit — Introduction to the MNT Program](https://www.bybit.com/en/help-center/article/Introduction-to-the-MNT-Program?category=bcaeae54c20e409dbc)
+- [Mantle — Tokenomics](https://docs.mantle.xyz/governance/parameters/tokenomics)

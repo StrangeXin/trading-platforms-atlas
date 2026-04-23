@@ -159,6 +159,128 @@ graph TD
   class CUSTODY1,CUSTODY2,CUSTODY3 hot
 ```
 
+## Bybit × Mantle: CEX Distribution into L2
+
+```mermaid
+graph LR
+  USER[Retail / institutional user]
+  BYBIT[Bybit<br/>CEX account + trading + custody]
+  MNT[MNT<br/>exchange balance / on-chain token]
+  WALLET[Self-custody wallet]
+  MANTLE[Mantle Network<br/>Ethereum L2]
+  DAPP[DeFi / mETH / fBTC / Rewards]
+  GOV[Mantle Governance<br/>Treasury / proposals / voting]
+
+  USER --> BYBIT
+  BYBIT -->|trade / Earn / Launchpool / VIP| MNT
+  MNT -->|withdraw to Mantle network| WALLET
+  WALLET --> MANTLE
+  MANTLE --> DAPP
+  MNT --> GOV
+  GOV -->|budgets / incentives| MANTLE
+  BYBIT -.strategic support / advisors / liquidity.-> MANTLE
+
+  classDef exch fill:#0369a1,color:#fff
+  classDef chain fill:#7c3aed,color:#fff
+  classDef token fill:#f59e0b,color:#000
+  classDef user fill:#059669,color:#fff
+
+  class USER,WALLET user
+  class BYBIT exch
+  class MANTLE,DAPP,GOV chain
+  class MNT token
+```
+
+See: [`07-bybit-mantle.md`](./07-bybit-mantle.md)
+
+## Wise Card × Payment Card Stack: App to Card Scheme
+
+```mermaid
+flowchart LR
+  USER[Cardholder]
+  WISE[Wise<br/>multi-currency account + FX]
+  BANK[Local bank<br/>debit / credit card]
+  CRYPTO[Exchange<br/>Bybit / Coinbase Card]
+  WALLET[Apple Pay / Google Pay<br/>token wallet]
+  CARD[Physical card / virtual card / mobile token]
+  NETWORK[Visa / Mastercard / UnionPay / Amex]
+  ACQ[Acquirer / PSP<br/>Stripe / Adyen / bank]
+  MERCHANT[Merchant / ATM]
+
+  USER --> WISE
+  USER --> BANK
+  USER --> CRYPTO
+  WISE --> CARD
+  BANK --> CARD
+  CRYPTO --> CARD
+  CARD --> WALLET
+  CARD --> NETWORK
+  WALLET --> NETWORK
+  NETWORK --> ACQ
+  ACQ --> MERCHANT
+
+  classDef user fill:#059669,color:#fff
+  classDef account fill:#0369a1,color:#fff
+  classDef card fill:#f59e0b,color:#000
+  classDef network fill:#7c3aed,color:#fff
+  classDef merchant fill:#dc2626,color:#fff
+
+  class USER user
+  class WISE,BANK,CRYPTO account
+  class CARD,WALLET card
+  class NETWORK,ACQ network
+  class MERCHANT merchant
+```
+
+See: [`08-wise-card-payment-card-stack.md`](./08-wise-card-payment-card-stack.md)
+
+## Market Card Taxonomy: Funding × Network × Form
+
+```mermaid
+mindmap
+  root((Payment cards))
+    Funding
+      Debit
+      Credit
+      Charge
+      Prepaid
+      Gift
+      Crypto
+      Benefit
+    Card schemes
+      Visa
+      Mastercard
+      Maestro
+      UnionPay
+      Amex
+      JCB
+      Discover
+      Local networks
+    Form factors
+      Physical
+      Virtual
+      Digital
+      Disposable
+      Apple Pay / Google Pay
+      ATM-only
+    User types
+      Consumer
+      Student
+      Business
+      Corporate
+      Government
+    Use cases
+      Travel
+      Airline / hotel
+      Cashback
+      Fuel
+      Healthcare
+      Transit
+      Meal benefits
+```
+
+See: [`09-card-taxonomy.md`](./09-card-taxonomy.md)
+
 ## TradingView's "Multi-Broker Aggregation" Model
 
 ```mermaid

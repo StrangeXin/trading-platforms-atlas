@@ -159,6 +159,128 @@ graph TD
   class CUSTODY1,CUSTODY2,CUSTODY3 hot
 ```
 
+## Bybit × Mantle：CEX 流量接入 L2
+
+```mermaid
+graph LR
+  USER[零售用户 / 机构用户]
+  BYBIT[Bybit<br/>CEX 账户 + 交易 + 托管]
+  MNT[MNT<br/>交易所余额 / 链上代币]
+  WALLET[自托管钱包]
+  MANTLE[Mantle Network<br/>Ethereum L2]
+  DAPP[DeFi / mETH / fBTC / Rewards]
+  GOV[Mantle Governance<br/>Treasury / 提案 / 投票]
+
+  USER --> BYBIT
+  BYBIT -->|买卖 / Earn / Launchpool / VIP| MNT
+  MNT -->|提现到 Mantle 网络| WALLET
+  WALLET --> MANTLE
+  MANTLE --> DAPP
+  MNT --> GOV
+  GOV -->|预算 / 激励| MANTLE
+  BYBIT -.战略支持 / 顾问 / 流动性.-> MANTLE
+
+  classDef exch fill:#0369a1,color:#fff
+  classDef chain fill:#7c3aed,color:#fff
+  classDef token fill:#f59e0b,color:#000
+  classDef user fill:#059669,color:#fff
+
+  class USER,WALLET user
+  class BYBIT exch
+  class MANTLE,DAPP,GOV chain
+  class MNT token
+```
+
+详见：[`07-bybit-mantle.md`](./07-bybit-mantle.md)
+
+## Wise 卡 × 支付卡栈：从 App 到卡组织
+
+```mermaid
+flowchart LR
+  USER[持卡人]
+  WISE[Wise<br/>多币种账户 + 换汇]
+  BANK[本地银行<br/>借记卡 / 信用卡]
+  CRYPTO[交易所<br/>Bybit / Coinbase Card]
+  WALLET[Apple Pay / Google Pay<br/>Token 钱包]
+  CARD[实体卡 / 虚拟卡 / 手机 token]
+  NETWORK[Visa / Mastercard / UnionPay / Amex]
+  ACQ[收单行 / PSP<br/>Stripe / Adyen / 银行]
+  MERCHANT[商户 / ATM]
+
+  USER --> WISE
+  USER --> BANK
+  USER --> CRYPTO
+  WISE --> CARD
+  BANK --> CARD
+  CRYPTO --> CARD
+  CARD --> WALLET
+  CARD --> NETWORK
+  WALLET --> NETWORK
+  NETWORK --> ACQ
+  ACQ --> MERCHANT
+
+  classDef user fill:#059669,color:#fff
+  classDef account fill:#0369a1,color:#fff
+  classDef card fill:#f59e0b,color:#000
+  classDef network fill:#7c3aed,color:#fff
+  classDef merchant fill:#dc2626,color:#fff
+
+  class USER user
+  class WISE,BANK,CRYPTO account
+  class CARD,WALLET card
+  class NETWORK,ACQ network
+  class MERCHANT merchant
+```
+
+详见：[`08-wise-card-payment-card-stack.md`](./08-wise-card-payment-card-stack.md)
+
+## 市面卡分类：资金来源 × 网络 × 形态
+
+```mermaid
+mindmap
+  root((支付卡))
+    资金来源
+      借记卡
+      信用卡
+      签账卡
+      预付卡
+      礼品卡
+      加密卡
+      福利卡
+    卡组织网络
+      Visa
+      Mastercard
+      Maestro
+      UnionPay
+      Amex
+      JCB
+      Discover
+      本地网络
+    使用形态
+      实体卡
+      虚拟卡
+      数字卡
+      一次性卡
+      Apple Pay / Google Pay
+      ATM-only
+    用户类型
+      个人卡
+      学生卡
+      商务卡
+      公司卡
+      政府卡
+    用途
+      旅行卡
+      航司酒店卡
+      返现卡
+      油卡
+      医疗卡
+      交通卡
+      餐补卡
+```
+
+详见：[`09-card-taxonomy.md`](./09-card-taxonomy.md)
+
 ## TradingView 的"多 broker 聚合"模式
 
 ```mermaid
