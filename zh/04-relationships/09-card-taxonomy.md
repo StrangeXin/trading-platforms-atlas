@@ -1,319 +1,302 @@
-# 市面上所有常见“卡”的分类图谱
+# 交易平台视角下的卡分类
 
-> 本页面不是列举每一家银行的每一张卡，而是给出“卡”的完整分类框架：按资金来源、卡组织网络、使用形态、持卡人类型、地域网络和特殊用途来理解。最后核验日期：2026-04-23。
+> 本页不是消费金融百科，而是把和 trading platforms atlas 相关的“卡”重新归档：哪些卡是入金通道，哪些卡是跨境法币工具，哪些卡是留存产品，哪些只是背景噪音。最后核验日期：2026-04-23。
 
 ---
 
 ## 一句话结论
 
-**“卡”不是一种东西，而是多层标签的组合。** 一张卡通常同时具备：
+**对交易平台来说，卡最重要的分类不是“好不好刷”，而是“这张卡能不能安全、高效地把钱打进账户，再合法地打出来”。**
+
+所以本项目真正需要的分类框架是：
 
 ```text
-发卡品牌 / 账户平台 + 资金来源 + 卡组织网络 + 使用形态 + 用户类型 + 地区规则
+入金卡
++ 跨境法币账户卡
++ 平台消费卡
++ 本地网络卡
++ 机构 / 商务运营卡
 ```
 
-例如：
-
-- **Wise Mastercard 借记卡** = Wise 账户 + Wise 多币种余额 + Mastercard 网络 + 实体/虚拟卡。
-- **Chase Visa 信用卡** = Chase 发卡 + 银行信用额度 + Visa 网络 + 个人信用卡。
-- **Payoneer Commercial Mastercard** = Payoneer 账户 + 商业余额 + Mastercard 网络 + 商务支出卡。
-- **Bybit Card** = 加密交易所账户 + 法币/加密余额转换 + Visa/Mastercard 网络 + 加密消费卡。
-- **银联借记卡** = 中国银行账户 + 活期余额 + UnionPay 网络 + 本地借记卡。
+而不是把所有礼品卡、校园卡、交通卡都当主线内容。
 
 ---
 
-## 1. 总图：一张卡的六层结构
+## 1. 五类与项目最相关的卡
 
 ```mermaid
-flowchart TD
-  CARD[一张具体的卡]
-  ISSUER[1 发卡方 / 账户平台<br/>银行 / Wise / Payoneer / 交易所 / 商户]
-  FUNDING[2 资金来源<br/>存款 / 信用额度 / 预充值 / 加密资产 / 福利账户]
-  NETWORK[3 卡组织网络<br/>Visa / Mastercard / UnionPay / Amex / JCB / 本地网络]
-  FORM[4 使用形态<br/>实体卡 / 虚拟卡 / 手机钱包 / 一次性卡]
-  USER[5 用户类型<br/>个人 / 商务 / 公司 / 政府 / 学生]
-  USECASE[6 用途限制<br/>通用消费 / 旅行 / 礼品 / 油卡 / 医疗 / 交通 / 餐补]
-
-  CARD --> ISSUER
-  CARD --> FUNDING
-  CARD --> NETWORK
-  CARD --> FORM
-  CARD --> USER
-  CARD --> USECASE
-```
-
-判断一张卡时，不要只看卡面 logo。更应该问：
-
-1. **谁给你发的卡？**
-2. **钱从哪里扣？**
-3. **走哪条网络？**
-4. **能不能线上 / 线下 / ATM / Apple Pay？**
-5. **是个人卡、商务卡还是政府 / 福利卡？**
-6. **有没有商户类别、地区或币种限制？**
-
----
-
-## 2. 按资金来源分类
-
-这是最重要的分类，因为它决定“你是在花自己的钱、借银行的钱，还是花预存/专用账户的钱”。
-
-| 类型 | 资金来源 | 典型例子 | 核心特点 | 主要风险 |
-|---|---|---|---|---|
-| 借记卡 Debit Card | 银行活期 / 支票账户余额 | 招行借记卡、Chase Debit、HSBC Debit | 直接扣账户余额，可 ATM | 账户余额不足、盗刷、跨境费 |
-| 信用卡 Credit Card | 银行授信额度 | Visa / Mastercard / Amex 信用卡 | 先消费后还款，可积分 / 分期 | 高利息、逾期、过度消费 |
-| 签账卡 Charge Card | 发卡方短期授信，通常需全额还款 | Amex 传统签账卡 | 不是典型循环信用，常服务高消费 / 商旅 | 需全额还款，费用较高 |
-| 预付卡 Prepaid Card | 先充值后消费 | 旅行预付卡、通用 reloadable card | 不依赖银行账户或信用 | 费用复杂、保护弱于银行账户 |
-| 礼品卡 Gift Card | 预存固定金额 | Amazon / Apple / 商场礼品卡 | 送礼、单商户或多商户消费 | 过期、丢失、诈骗 |
-| 工资卡 / Payroll Card | 雇主发薪到卡账户 | 美国 payroll card | 给没有银行账户的员工发工资 | 取现和查询费用 |
-| 政府福利卡 / EBT | 政府福利资金 | SNAP / EBT、补助卡 | 专款专用、商户类别限制 | 用途受限、资格审查 |
-| 医疗账户卡 | HSA / FSA 等医疗账户 | 美国 HSA/FSA debit card | 医疗支出税优 | 非合格消费需纠正 / 罚税 |
-| 加密卡 Crypto Card | 交易所余额、稳定币、加密资产变现 | Bybit / Coinbase / Crypto.com Card | 用加密资产包装成卡消费 | 税务复杂、币价波动、交易所风险 |
-| 多币种余额卡 | 多币种法币余额 | Wise / Revolut / YouTrip | 跨境消费和换汇 | 地区可用性、ATM / 押金限制 |
-
----
-
-## 3. 按卡组织 / 支付网络分类
-
-卡组织负责交易路由、授权、清算、争议规则和受理网络。它不是一定负责发卡或放贷。
-
-| 网络 / 品牌 | 主要区域 | 常见卡类型 | 备注 |
-|---|---|---|---|
-| Visa | 全球 | 借记、信用、预付、商务 | 四方模式代表之一，全球接受度高 |
-| Mastercard | 全球 | 借记、信用、预付、商务 | 与 Visa 类似，另有 Maestro / Cirrus 历史网络 |
-| Maestro | 欧洲 / 传统借记场景 | 借记卡 | Mastercard 旗下借记品牌；很多市场逐步迁移到 Mastercard Debit |
-| Cirrus | 全球 ATM 网络 | ATM / 借记取现 | Mastercard 旗下 ATM 网络，不等于完整消费卡 |
-| Visa Plus | 全球 ATM 网络 | ATM / 借记取现 | Visa 旗下 ATM 网络 |
-| UnionPay / 银联 | 中国 + 全球受理 | 借记、信用、预付 | 中国本地覆盖强，海外受理取决于商户和 ATM |
-| American Express / Amex | 全球高端和商旅强 | 信用、签账、商务 | 常见 closed-loop / 三方模式叙事，也有合作发卡 |
-| Discover | 美国强，全球通过 Discover Global Network | 信用、借记、预付 | Diners Club 属于其全球网络体系 |
-| Diners Club | 商旅 / 国际网络 | 信用、签账 | 历史悠久，现多纳入 Discover 网络 |
-| JCB | 日本强，亚洲旅游网络 | 信用、借记、预付 | 日本本土强，亚洲商旅场景常见 |
-| RuPay | 印度 | 借记、信用、预付 | NPCI 推出的印度本地卡网络 |
-| Interac | 加拿大 | 借记 / 本地支付 | 加拿大本地 debit 网络 |
-| eftpos | 澳大利亚 | 借记 / 本地支付 | 澳大利亚本地卡支付网络 |
-| girocard | 德国 | 借记 / 本地支付 | 德国本地银行卡网络 |
-| Cartes Bancaires / CB | 法国 | 借记 / 信用联名 | 法国本地卡网络，常与 Visa/Mastercard 联名 |
-| Bancontact | 比利时 | 借记 / 本地支付 | 比利时本地强势网络 |
-| Dankort | 丹麦 | 借记 / 本地支付 | 丹麦本地网络，常与 Visa 联名 |
-| mada | 沙特 | 借记 / 本地支付 | 沙特本地支付网络 |
-| Mir | 俄罗斯 | 借记 / 本地支付 | 受制裁和地缘政治影响，国际受理有限 |
-| Elo | 巴西 | 信用 / 借记 / 预付 | 巴西本地卡品牌 |
-| Troy | 土耳其 | 借记 / 信用 / 预付 | 土耳其本地卡网络 |
-
-关键区别：
-
-```text
-Visa / Mastercard / UnionPay / Amex = 交易走哪条网络
-银行 / Wise / Payoneer / Bybit = 谁给你账户和卡
-Debit / Credit / Prepaid = 钱从哪里来
+mindmap
+  root((交易平台相关卡))
+    入金卡
+      银行借记卡
+      信用卡
+      本地 debit 网络
+    跨境法币账户卡
+      Wise
+      Payoneer
+      Revolut Business
+    平台消费卡
+      Coinbase Card
+      Bybit Card
+      Robinhood Cash Card
+    本地网络卡
+      UnionPay
+      Interac
+      girocard
+      eftpos
+      CB
+    机构 / 商务运营卡
+      Business card
+      Corporate card
+      Purchasing card
 ```
 
 ---
 
-## 4. 按使用形态分类
+## 2. 入金卡：最重要的零售资金入口
 
-| 形态 | 本质 | 典型用途 | 注意事项 |
-|---|---|---|---|
-| 实体卡 Physical Card | 塑料 / 金属卡，有芯片、磁条、NFC | 线下消费、ATM | 丢失和盗刷风险 |
-| 虚拟卡 Virtual Card | 只有数字卡号，无实体卡 | 网购、SaaS、订阅 | 不能插卡或 ATM |
-| 数字卡 Digital Card | App 内即时生成 / 显示卡信息 | 立即线上付款 | 与虚拟卡边界因产品而异 |
-| 一次性卡 Disposable Card | 每次或短期更换卡号 | 高风险商户、试用订阅 | 退款和续费可能复杂 |
-| 手机钱包卡 Tokenized Card | Apple Pay / Google Pay / Samsung Pay token | 线下 tap、App 内支付 | 手机钱包不是发卡方 |
-| 可穿戴支付卡 | 手表 / 手环 / 戒指 token | 运动、交通、快速支付 | 依赖设备和地区支持 |
-| ATM-only Card | 只可取现 / 查询 | 老式银行 ATM 卡 | 不能通用消费 |
-| Contactless-only / Transit Card | NFC 交通或小额支付 | 地铁、公交、校园 | 通常闭环或半闭环 |
+### 这类卡包括什么
 
----
+- 银行借记卡
+- 部分信用卡
+- 本地 debit 网络联名卡
+- 某些支持 3DS 的国际卡
 
-## 5. 按持卡人和账户性质分类
+### 为什么它们重要
 
-| 类型 | 面向谁 | 常见代表 | 特点 |
-|---|---|---|---|
-| 个人卡 Consumer Card | 个人消费者 | 普通借记 / 信用 / Wise / Revolut | 日常消费、旅行、网购 |
-| 学生卡 Student Card | 学生 | 学生信用卡、校园卡 | 额度低、教育和身份绑定 |
-| 青少年 / 儿童卡 Teen / Kids Card | 未成年人和家庭 | GoHenry、Revolut <18 | 家长控制、限额、教育 |
-| 商务卡 Business Card | 个体户、小公司 | Wise Business、Payoneer、Amex Business | 公司开支、员工卡、账务 |
-| 公司卡 Corporate Card | 中大型企业 | Brex、Ramp、Airwallex、银行公司卡 | 费用管理、审批、对账 |
-| 采购卡 Purchasing Card / P-Card | 企业采购部门 | 银行 P-card | B2B 采购、商户类别限制 |
-| 车队 / 油卡 Fleet / Fuel Card | 物流、车队 | WEX、Shell Fleet | 加油、维修、司机管理 |
-| 政府 / 福利卡 Government Card | 政府项目受益人 | EBT、补助卡 | 专款专用、资格审查 |
-| 商户会员卡 / Store Card | 商户客户 | Amazon、Costco、百货商店卡 | 返利强但用途窄 |
+- 是零售用户第一次入金最自然的路径。
+- 比银行电汇更快。
+- 比 ACH / SEPA 等清算周期更短。
+- 对加密所尤其关键：用户可以即时买币。
 
----
+### 为什么平台又爱又怕
 
-## 6. 按用途和场景分类
-
-| 场景卡 | 代表 | 解决什么问题 | 限制 |
-|---|---|---|---|
-| 旅行卡 | Wise、Revolut、YouTrip | 多币种、低换汇成本、海外消费 | 押金和 ATM 规则需注意 |
-| 航司 / 酒店联名卡 | Amex Platinum、Chase Sapphire、航空联名卡 | 里程、酒店权益、保险 | 年费高、积分规则复杂 |
-| 现金返还卡 | Citi Double Cash、Apple Card 等 | 简单返现 | 跨境和类别规则不同 |
-| 余额转移卡 | 0% APR balance transfer cards | 降低信用卡利息 | 转账费、优惠期后高利率 |
-| Secured Credit Card | 押金担保信用卡 | 建立 / 修复信用记录 | 需押金、额度低 |
-| Store / Private Label Card | 商户自有卡 | 店内分期和返利 | 只能在特定商户或生态使用 |
-| Gift Card | 礼品卡 | 送礼、预算隔离 | 诈骗高发、退款难 |
-| Transit Card | Oyster、Octopus、Suica | 交通、小额支付 | 地域和生态限制 |
-| Campus Card | 校园一卡通 | 食堂、门禁、打印 | 校内闭环 |
-| Meal / Voucher Card | 餐补卡、Sodexo 等 | 员工福利、餐饮补贴 | 商户类别限制 |
-| Healthcare Card | HSA / FSA 卡 | 医疗税优支出 | 必须合格医疗用途 |
-| Gaming / Teen Spending Card | 游戏 / 青少年卡 | 限额、家长控制 | 使用范围窄 |
-| Crypto Card | Bybit / Coinbase / Crypto.com | 加密资产日常消费 | 税务和监管复杂 |
-
----
-
-## 7. 按发卡主体分类
-
-| 发卡主体 | 例子 | 他们真正提供什么 |
-|---|---|---|
-| 传统银行 | Chase、HSBC、招行、工行 | 存款账户、信用额度、合规、卡发行 |
-| 信用卡公司 / 网络型发卡方 | Amex、Discover | 卡网络、发卡、商户网络、奖励体系 |
-| Fintech / Neobank | Wise、Revolut、N26、Monzo、Chime | App 体验、账户包装、换汇、预算管理 |
-| 跨境收款平台 | Payoneer、Airwallex | 多币种收款、B2B 支付、商业卡 |
-| 加密交易所 | Bybit、Coinbase、Crypto.com | 加密资产余额、法币转换、返现权益 |
-| 商户 / 平台 | Amazon、Apple、Costco | 生态内返利、会员绑定、消费闭环 |
-| 政府 / 雇主 / 学校 | EBT、Payroll、Campus Card | 特定资金发放和用途控制 |
-| BIN sponsor / 发卡处理商 | Marqeta、Lithic、Adyen Issuing 等 | 帮品牌方发卡、处理授权、合规接口 |
-
-很多现代卡的实际结构是：
-
-```text
-前台品牌（Wise / X 平台）
-+ 持牌发卡机构或 EMI
-+ BIN sponsor / issuer processor
-+ Visa / Mastercard 等网络
-+ 收单方 / 商户
-```
-
-所以你看到的品牌不一定是法律上的发卡行。
-
----
-
-## 8. 开环、闭环、半闭环
-
-| 类型 | 含义 | 例子 |
-|---|---|---|
-| 开环卡 Open-loop | 可在广泛商户网络使用 | Visa / Mastercard / UnionPay 卡 |
-| 闭环卡 Closed-loop | 只能在一个商户或生态使用 | Starbucks Card、校园卡、部分礼品卡 |
-| 半闭环卡 Semi-closed-loop | 可在一组商户 / 类别使用 | 餐补卡、交通卡、商场卡 |
-
-Wise 卡、银行信用卡、Bybit Card 通常属于开环卡；星巴克卡、单商户礼品卡、校园卡更接近闭环。
-
----
-
-## 9. 对新手最实用的选择框架
-
-### 本地生活
-
-- 本地银行借记卡：工资、缴费、ATM、日常基础。
-- 本地信用卡：信用记录、积分、押金、大额消费保护。
-- 手机钱包：把本地卡 token 化，提高便利性。
-
-### 出国旅行 / 海外网购
-
-- Wise / Revolut / YouTrip：多币种和换汇。
-- 一张 Visa + 一张 Mastercard：降低单网络失效风险。
-- 信用卡：酒店、租车、押金、保险。
-
-### 跨境收款 / 自由职业
-
-- Wise：个人和小团队跨境收款、换汇、消费。
-- Payoneer：平台收款、跨境电商、广告费和商业支出。
-- 本地银行账户：税务、长期储蓄和本地合规。
-
-### 企业开支
-
-- Business card：小公司和个体户开支。
-- Corporate card：团队审批、限额、报销、SaaS 管理。
-- P-card / Fleet card：采购和车队专项管理。
-
-### 加密资产消费
-
-- 交易所卡：把交易所余额接入日常消费。
-- 稳定币卡：减少币价波动，但仍有交易所和监管风险。
-- 税务记录：每笔消费可能是资产处置。
-
----
-
-## 10. 卡面 logo 怎么读
-
-一张卡面可能同时出现多个标志：
-
-```text
-银行 / Wise / Payoneer / 交易所 logo = 谁提供账户和客户关系
-Visa / Mastercard / UnionPay / Amex / JCB = 走哪条受理网络
-Debit / Credit / Prepaid / Business = 资金和产品类型
-Contactless 标志 = 支持 NFC
-Apple Pay / Google Pay = 可加入手机钱包
-Plus / Cirrus = ATM 网络标志
-本地网络标志（CB / girocard / Interac / eftpos）= 本地收单网络
-```
-
-例如：
-
-- **Wise + Mastercard Debit**：Wise 多币种余额，走 Mastercard 借记网络。
-- **Bank + Visa Credit**：银行信用额度，走 Visa 网络。
-- **Bank + girocard + Mastercard**：德国本地网络 + 国际联名网络。
-- **UnionPay Debit**：银联借记网络，本地银行账户扣款。
-- **Amex Platinum**：Amex 发卡和网络，高端签账 / 信用权益。
-
----
-
-## 11. 风险与费用维度
-
-| 维度 | 需要检查什么 |
+| 优点 | 缺点 |
 |---|---|
-| 年费 | 信用卡、商务卡、高端旅行卡常见 |
-| 外币交易费 | 传统银行信用卡 / 借记卡常见 |
-| ATM 费 | 发卡方、ATM 运营商、跨境网络都可能收费 |
-| 利息 | 信用卡循环欠款和现金预借最贵 |
-| 预授权 | 酒店、租车、加油站可能冻结资金 |
-| 退款 | 虚拟卡、一次性卡、礼品卡退款更复杂 |
-| 争议 / 拒付 | 信用卡通常强于借记 / 预付 |
-| 账户审查 | 跨境、加密、大额交易更容易触发 |
-| 税务 | 加密卡消费、信用卡奖励、商务支出可能有税务影响 |
-| 地区限制 | 发卡资格、寄送、卡网络和商户受理都可能受限 |
+| 转化高 | 手续费高 |
+| 到账快 | chargeback 风险高 |
+| 用户门槛低 | 欺诈 / 盗卡风险高 |
+| 适合小额首充 | 大额资金效率差 |
+
+### 研究结论
+
+对平台来说，卡入金是一条 **获客友好、风控痛苦** 的通道。
 
 ---
 
-## 12. 总结：市面上的卡可以这样归档
+## 3. 跨境法币账户卡：Wise / Payoneer / Revolut Business
+
+这类卡不一定是主入金通道，但对跨境用户和平台外围生态很重要。
+
+### 它们解决什么问题
+
+- 多币种余额管理
+- 跨境收款
+- 换汇
+- 海外广告费 / SaaS / 小额运营支付
+- trader / affiliate / freelancer 的跨境周转
+
+### 这类卡的共同特点
+
+- 卡只是账户的延伸，不是核心清算基础设施。
+- 更像“平台外围法币工具”，不是撮合或托管层。
+- 在不同地区被交易平台接受程度不一致。
+
+### 内部差异
+
+| 产品 | 更适合谁 | 项目里的定位 |
+|---|---|---|
+| Wise | trader / freelancer / small operator | 个人级跨境法币工具 |
+| Payoneer | seller / affiliate / business operator | 平台商家和商业支出工具 |
+| Revolut Business | 欧洲和国际化团队 | 新银行式企业资金工具 |
+
+---
+
+## 4. 平台消费卡：Coinbase Card / Bybit Card / Robinhood Cash Card
+
+这类卡和“入金卡”不是一回事。
+
+### 它们真正做什么
+
+- 把平台余额变成可消费余额；
+- 让用户把钱留在平台内；
+- 提高日活、余额留存和钱包化程度。
+
+### 为什么交易平台会发自己的卡
+
+| 商业目的 | 含义 |
+|---|---|
+| 提高留存 | 用户不急着把钱提走 |
+| 扩展场景 | 从交易延伸到消费 |
+| 增加收入 | interchange / 合作收益 / 会员权益 |
+| 账户中心化 | 把平台变成用户主钱包之一 |
+
+### 项目里的意义
+
+这类卡不是交易基础设施，而是 **平台商业模式向现金管理延伸** 的信号。
+
+---
+
+## 5. 本地网络卡：决定不同国家的真实入金效率
+
+很多研究只写 Visa / Mastercard，但真实世界里，本地网络常常决定支付成功率。
+
+### 典型网络
+
+- 中国：**UnionPay**
+- 加拿大：**Interac**
+- 德国：**girocard**
+- 澳大利亚：**eftpos**
+- 法国：**Cartes Bancaires (CB)**
+- 比利时：**Bancontact**
+- 丹麦：**Dankort**
+
+### 为什么它们重要
+
+- 本地收单成功率更高；
+- 费用结构和国际卡不同；
+- 有些国家 debit 主体根本不是 Visa / Mastercard；
+- 平台如果只接国际网络，可能会损失本地用户。
+
+### 对 atlas 的启发
+
+交易平台的“支付能力”不能只看 API 和撮合，还要看：
 
 ```text
-按资金来源：借记卡 / 信用卡 / 签账卡 / 预付卡 / 礼品卡 / 福利卡 / 加密卡
-按网络：Visa / Mastercard / Maestro / UnionPay / Amex / JCB / Discover / 本地网络
-按形态：实体卡 / 虚拟卡 / 数字卡 / 一次性卡 / 手机钱包 token / ATM-only
-按用户：个人卡 / 学生卡 / 青少年卡 / 商务卡 / 公司卡 / 政府卡
-按用途：旅行卡 / 返现卡 / 航司酒店卡 / 油卡 / 医疗卡 / 交通卡 / 校园卡 / 餐补卡
-按开放性：开环卡 / 闭环卡 / 半闭环卡
-```
-
-最短记法：
-
-```text
-Wise、银行、Bybit、Payoneer = 谁给你卡
-Debit、Credit、Prepaid、Crypto = 钱从哪里来
-Visa、Mastercard、Maestro、UnionPay = 交易走哪条路
-实体、虚拟、Apple Pay = 你用什么形态付款
+它在每个国家接了什么本地支付网络
 ```
 
 ---
 
-## 13. 官方来源
+## 6. 机构 / 商务运营卡：平台自己也要花钱
 
-- [CFPB: Prepaid cards](https://www.consumerfinance.gov/consumer-tools/prepaid-cards/)
-- [CFPB: Credit cards](https://www.consumerfinance.gov/consumer-tools/credit-cards/)
-- [Visa: Accept Visa payments](https://usa.visa.com/run-your-business/accept-visa-payments.html)
-- [Mastercard Newsroom: Maestro retires](https://newsroom.mastercard.com/news/europe/en/perspectives/en/2021/blog-from-valerie-nowak-why-this-maestro-is-retiring-after-30-years/)
-- [Mastercard ATM locator: Mastercard / Maestro / Cirrus](https://www.mastercard.com/us/en/personal/get-support/atm-near-me.html)
+交易平台不只是收用户钱，也要自己付款。
+
+### 常见场景
+
+- 广告投放
+- 云服务 / SaaS
+- 差旅
+- 外包和供应商付款
+- 市场活动
+
+### 常见卡型
+
+- Business card
+- Corporate card
+- Purchasing card (P-card)
+- Commercial debit / prepaid card
+
+### 为什么纳入项目
+
+因为很多新平台的运营能力，本质上是：
+
+- 有没有全球支付能力；
+- 能不能高效付广告费；
+- 能不能给全球团队和供应商打钱；
+- 能不能做多币种企业财务。
+
+这和纯交易技术同样影响平台扩张速度。
+
+---
+
+## 7. 信用卡、借记卡、预付卡：在项目里的正确权重
+
+### 借记卡
+
+- 最重要的零售入金卡。
+- 和银行账户路径最接近。
+- 退款到原路径更自然。
+
+### 信用卡
+
+- 可做入金，但风控压力更大。
+- 在 crypto 场景常被视作 cash advance / quasi-cash 风险。
+- 平台常限制国家、BIN、额度和产品范围。
+
+### 预付卡
+
+- 对某些小额场景可用；
+- 但在交易平台里通常不是优先主路径；
+- 接受度和风控友好度弱于传统借记卡。
+
+结论：
+
+```text
+交易平台研究里，
+借记卡 > 信用卡 > 预付卡
+```
+
+---
+
+## 8. 低相关卡型：知道存在即可
+
+以下卡型真实存在，但不该占 atlas 主要篇幅：
+
+- 礼品卡
+- 校园卡
+- 交通卡
+- 餐补卡
+- 游戏卡
+- 医疗福利卡
+
+它们更适合放在“支付行业背景噪音”，而不是 trading platform 主线。
+
+---
+
+## 9. 这个分类如何服务本项目
+
+如果后续继续写平台、架构和关系图，卡应该被放进这些主题：
+
+### 1）平台入金能力
+
+- 支持哪些卡网络；
+- 支持 debit 还是 credit；
+- 即时到账还是延迟可用；
+- 哪些地区受限。
+
+### 2）平台出金和退款逻辑
+
+- 是否退回原卡；
+- 利润是否需走银行转账；
+- AML / fraud rules 怎么设。
+
+### 3）跨境法币工具层
+
+- Wise / Payoneer / 本地银行在用户侧扮演什么角色；
+- 平台对这些工具的接受度和限制。
+
+### 4）平台商业模式延伸
+
+- 是否发自己的 debit card / cash card；
+- 是否试图成为钱包和现金管理入口。
+
+---
+
+## 10. 最后的最短记法
+
+```text
+借记卡 / 信用卡 = 用户怎么入金
+Wise / Payoneer = 用户怎么跨境周转法币
+Visa / Mastercard / UnionPay / 本地网络 = 平台接哪条支付路
+Coinbase Card / Bybit Card / Robinhood Cash Card = 平台怎么把余额变成消费工具
+Business / Corporate card = 平台自己怎么花钱
+```
+
+---
+
+## 11. 官方来源
+
+- [Wise Card](https://wise.com/card/)
+- [Payoneer Commercial Mastercard](https://www.payoneer.com/solutions/payoneer-commercial-card/)
+- [Bybit — Bank Card Terms of Use](https://www.bybit.com/en/help-center/article/?id=000001639)
+- [Bybit Card](https://www.bybit.com/en/help-center/article/Bybit-Card-Introduction)
+- [Coinbase Card — Use your Coinbase debit card](https://help.coinbase.com/coinbase/trading-and-funding/coinbase-card/use-cb-card)
+- [Robinhood — Robinhood Cash Card](https://robinhood.com/us/en/support/articles/robinhood-cash-card/)
 - [UnionPay International](https://www.unionpayintl.com/en/)
-- [American Express Global Network](https://network.americanexpress.com/globalnetwork/v4/partners/acquirers/power-of-the-network/)
-- [Discover Global Network](https://www.discoverglobalnetwork.com/)
-- [JCB Global](https://www.global.jcb/en/)
-- [RuPay](https://www.rupay.co.in/)
-- [Interac](https://www.interac.ca/en/consumers/products/interac-debit/)
-- [eftpos Australia](https://www.eftposaustralia.com.au/)
+- [Interac Debit](https://www.interac.ca/en/payments/personal/pay-with-interac-debit/)
 - [girocard](https://www.girocard.eu/)
+- [eftpos Australia](https://www.eftposaustralia.com.au/)
 - [Cartes Bancaires](https://www.cartes-bancaires.com/)
-- [Bancontact Payconiq](https://www.bancontact.com/)
-- [Dankort](https://www.dankort.dk/)
-- [mada](https://www.mada.com.sa/)
-- [Elo](https://www.elo.com.br/)
+- [Bancontact](https://www.bancontact.com/)
+- [Dankort](https://dankort.dk/)

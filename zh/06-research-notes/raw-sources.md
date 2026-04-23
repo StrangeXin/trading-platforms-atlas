@@ -102,92 +102,63 @@
 
 ---
 
-## 支付卡 / 跨境支付
+## 支付卡 / 交易平台资金通道
 
-### Wise Card × 支付卡网络
+### Wise / 银行卡 × 交易平台入金出金
 
 - **Wise Card 官方产品页**
   - URL: https://wise.com/card/
   - Date: 2026-04-23 accessed
-  - 事件梗概：Wise Card 是 Wise 多币种账户的消费卡入口，用于线下、线上和 ATM 场景；可用性、费用和发卡安排按地区不同
+  - 事件梗概：Wise Card 用于理解跨境多币种账户如何通过卡接入消费和小额资金周转；在本项目里定位为交易平台外围的法币工具
   - Trust: `primary`
   - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Wise Card 费用 / 可用性 / 数字卡 / 手机钱包帮助文档**
-  - URL: https://wise.com/help/articles/2935769/what-are-the-wise-card-fees
-  - URL: https://wise.com/help/articles/2968915/can-i-get-the-wise-card-in-my-country
-  - URL: https://wise.com/us/virtual-card/
-  - URL: https://wise.com/help/articles/2978018/can-i-use-my-wise-card-with-apple-pay-or-google-pay
+- **Bybit 银行卡买币 / 银行卡条款**
+  - URL: https://www.bybit.com/en/help-center/article/How-to-Buy-Coins-with-Your-Credit-Debit-Card-on-Bybit
+  - URL: https://www.bybit-global.com/en/help-center/article/FAQ-Bank-Card-Payments
+  - URL: https://www.bybit.com/en/help-center/article/?id=000001639
   - Date: 2026-04-23 accessed
-  - 事件梗概：Wise 官方说明卡费、申请地区、数字卡和 Apple Pay / Google Pay 支持；这些规则会按地区和产品更新变化
+  - 事件梗概：Bybit 官方资料显示银行卡是 One-Click Buy 等即时买币路径；信用卡买币可能被发卡行视为 cash advance，体现交易平台卡入金的 quasi-cash 风险
   - Trust: `primary`
   - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Visa / Mastercard 卡网络角色**
-  - URL: https://usa.visa.com/run-your-business/accept-visa-payments.html
-  - URL: https://www.mastercard.us/en-us/business/overview/payment-processing.html
-  - URL: https://www.unionpayintl.com/en/
-  - URL: https://network.americanexpress.com/globalnetwork/v4/partners/acquirers/power-of-the-network/
+- **eToro 入金 / 出金 FAQ**
+  - URL: https://www.etoro.com/en-us/customer-service/deposit-faq/
+  - URL: https://www.etoro.com/en-us/customer-service/withdraw-faq/
   - Date: 2026-04-23 accessed
-  - 事件梗概：卡组织官方材料用于拆分 cardholder、merchant、acquirer、network、issuer 等角色，并区分四方网络、本地网络和 Amex closed-loop 叙事
+  - 事件梗概：eToro 官方说明借记卡入金和提现时常见的 refund-to-original-payment-method 逻辑；用于解释交易平台为什么优先原路退回
   - Trust: `primary`
   - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Payoneer Commercial Mastercard**
+- **Coinbase / Robinhood 平台消费卡**
+  - URL: https://help.coinbase.com/coinbase/trading-and-funding/coinbase-card/use-cb-card
+  - URL: https://robinhood.com/us/en/support/articles/robinhood-cash-card/
+  - URL: https://robinhood.com/support/articles/what-is-a-robinhood-spending-account/
+  - Date: 2026-04-23 accessed
+  - 事件梗概：Coinbase Card 和 Robinhood Cash Card 用于说明平台余额如何被重新包装成消费账户 / spend card，属于留存和钱包化产品
+  - Trust: `primary`
+  - 相关：`04-relationships/08-wise-card-payment-card-stack.md`、`04-relationships/09-card-taxonomy.md`
+
+### 交易平台相关卡分类 / 本地网络
+
+- **跨境法币账户和商务卡**
   - URL: https://www.payoneer.com/solutions/payoneer-commercial-card/
+  - URL: https://wise.com/card/
   - Date: 2026-04-23 accessed
-  - 事件梗概：Payoneer 官方商业卡页面用于和 Wise Card 对比：Payoneer 更偏跨境卖家、平台收款和公司开支场景
-  - Trust: `primary`
-  - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
-
-- **CFPB 预付卡消费者说明**
-  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
-  - Date: 2026-04-23 accessed
-  - 事件梗概：美国 CFPB 对 prepaid card 的定义、用途和消费者注意事项提供监管视角
-  - Trust: `primary`
-  - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
-
-- **交易所卡官方说明**
-  - URL: https://www.bybit.com/en/help-center/article/Bybit-Card-Introduction
-  - URL: https://help.coinbase.com/en/coinbase/trading-and-funding/coinbase-card/coinbase-card-for-the-us
-  - URL: https://www.crypto.com/cards/
-  - Date: 2026-04-23 accessed
-  - 事件梗概：Bybit / Coinbase / Crypto.com 卡均把交易所或加密资产余额接入传统卡网络，但资金来源、税务和监管风险与 Wise 法币卡不同
-  - Trust: `primary`
-  - 相关：`04-relationships/08-wise-card-payment-card-stack.md`
-
-### 市面卡分类 / 本地卡组织
-
-- **借记 / 信用 / 预付 / 福利卡基础分类**
-  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
-  - URL: https://www.consumerfinance.gov/consumer-tools/credit-cards/
-  - Date: 2026-04-23 accessed
-  - 事件梗概：CFPB 官方消费者资料用于区分信用卡、预付卡、工资卡和政府福利卡等基础类型
+  - 事件梗概：Payoneer / Wise 作为跨境法币账户和卡工具，用于交易员、affiliate、跨境团队、平台运营商的外围资金流分析
   - Trust: `primary`
   - 相关：`04-relationships/09-card-taxonomy.md`
 
-- **国际卡组织与 ATM 网络**
-  - URL: https://newsroom.mastercard.com/news/europe/en/perspectives/en/2021/blog-from-valerie-nowak-why-this-maestro-is-retiring-after-30-years/
-  - URL: https://www.mastercard.com/us/en/personal/get-support/atm-near-me.html
-  - URL: https://www.discoverglobalnetwork.com/
-  - URL: https://www.global.jcb/en/
-  - URL: https://www.rupay.co.in/
-  - Date: 2026-04-23 accessed
-  - 事件梗概：用于补充 Maestro、Cirrus、Discover、JCB、RuPay 等网络和品牌的官方定位
-  - Trust: `primary`
-  - 相关：`04-relationships/09-card-taxonomy.md`
-
-- **区域本地卡网络**
-  - URL: https://www.interac.ca/en/consumers/products/interac-debit/
-  - URL: https://www.eftposaustralia.com.au/
+- **本地卡网络：影响各国入金成功率**
+  - URL: https://www.unionpayintl.com/en/
+  - URL: https://www.interac.ca/en/payments/personal/pay-with-interac-debit/
   - URL: https://www.girocard.eu/
+  - URL: https://www.eftposaustralia.com.au/
   - URL: https://www.cartes-bancaires.com/
   - URL: https://www.bancontact.com/
-  - URL: https://www.dankort.dk/
-  - URL: https://www.mada.com.sa/
-  - URL: https://www.elo.com.br/
+  - URL: https://dankort.dk/
   - Date: 2026-04-23 accessed
-  - 事件梗概：用于归档加拿大、澳大利亚、德国、法国、比利时、丹麦、沙特、巴西等本地卡网络
+  - 事件梗概：本地 debit / 卡网络决定交易平台在不同国家的支付覆盖、成本和成功率，属于平台本地化能力的一部分
   - Trust: `primary`
   - 相关：`04-relationships/09-card-taxonomy.md`
 

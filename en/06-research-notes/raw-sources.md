@@ -102,92 +102,63 @@
 
 ---
 
-## Payment Cards / Cross-Border Payments
+## Payment Cards / Trading Platform Funding Rails
 
-### Wise Card × Payment Card Networks
+### Wise / Bank Cards × Trading Platform Deposits and Withdrawals
 
 - **Wise Card official product page**
   - URL: https://wise.com/card/
   - Date: 2026-04-23 accessed
-  - Summary: Wise Card is the card-spending interface for Wise multi-currency accounts, used for in-person, online, and ATM scenarios; availability, fees, and issuance setup vary by region
+  - Summary: Wise Card is used here to understand how cross-border multi-currency accounts connect to card spending and small-scale fiat movement around trading platforms
   - Trust: `primary`
   - Related: `04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Wise Card fees / availability / digital cards / mobile wallet help docs**
-  - URL: https://wise.com/help/articles/2935769/what-are-the-wise-card-fees
-  - URL: https://wise.com/help/articles/2968915/can-i-get-the-wise-card-in-my-country
-  - URL: https://wise.com/us/virtual-card/
-  - URL: https://wise.com/help/articles/2978018/can-i-use-my-wise-card-with-apple-pay-or-google-pay
+- **Bybit bank-card crypto purchase / bank-card terms**
+  - URL: https://www.bybit.com/en/help-center/article/How-to-Buy-Coins-with-Your-Credit-Debit-Card-on-Bybit
+  - URL: https://www.bybit-global.com/en/help-center/article/FAQ-Bank-Card-Payments
+  - URL: https://www.bybit.com/en/help-center/article/?id=000001639
   - Date: 2026-04-23 accessed
-  - Summary: Wise official docs describe card fees, eligible countries, digital cards, and Apple Pay / Google Pay support; these rules vary by region and can change
+  - Summary: Bybit official materials show bank cards as an instant One-Click Buy path; credit-card crypto purchases may be treated as cash advances by issuers, illustrating quasi-cash risk
   - Trust: `primary`
   - Related: `04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Visa / Mastercard card network roles**
-  - URL: https://usa.visa.com/run-your-business/accept-visa-payments.html
-  - URL: https://www.mastercard.us/en-us/business/overview/payment-processing.html
-  - URL: https://www.unionpayintl.com/en/
-  - URL: https://network.americanexpress.com/globalnetwork/v4/partners/acquirers/power-of-the-network/
+- **eToro deposit / withdrawal FAQ**
+  - URL: https://www.etoro.com/en-us/customer-service/deposit-faq/
+  - URL: https://www.etoro.com/en-us/customer-service/withdraw-faq/
   - Date: 2026-04-23 accessed
-  - Summary: card-scheme official materials are used to separate cardholder, merchant, acquirer, network, issuer, and settlement roles, including four-party networks, local networks, and the Amex closed-loop narrative
+  - Summary: eToro official docs explain debit-card funding and refund-to-original-payment-method logic, used to explain why trading platforms often return funds to source first
   - Trust: `primary`
   - Related: `04-relationships/08-wise-card-payment-card-stack.md`
 
-- **Payoneer Commercial Mastercard**
+- **Coinbase / Robinhood platform spend cards**
+  - URL: https://help.coinbase.com/coinbase/trading-and-funding/coinbase-card/use-cb-card
+  - URL: https://robinhood.com/us/en/support/articles/robinhood-cash-card/
+  - URL: https://robinhood.com/support/articles/what-is-a-robinhood-spending-account/
+  - Date: 2026-04-23 accessed
+  - Summary: Coinbase Card and Robinhood Cash Card show how platform balances are repackaged into spend accounts, retention, and walletization products
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`, `04-relationships/09-card-taxonomy.md`
+
+### Trading-Platform-Relevant Card Taxonomy / Local Networks
+
+- **Cross-border fiat accounts and commercial cards**
   - URL: https://www.payoneer.com/solutions/payoneer-commercial-card/
+  - URL: https://wise.com/card/
   - Date: 2026-04-23 accessed
-  - Summary: Payoneer's official commercial card page is used to compare against Wise Card: Payoneer is more seller/platform-payout and business-expense oriented
-  - Trust: `primary`
-  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
-
-- **CFPB prepaid cards consumer guide**
-  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
-  - Date: 2026-04-23 accessed
-  - Summary: U.S. CFPB provides the regulatory consumer view for prepaid card definition, use cases, and cautions
-  - Trust: `primary`
-  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
-
-- **Exchange card official docs**
-  - URL: https://www.bybit.com/en/help-center/article/Bybit-Card-Introduction
-  - URL: https://help.coinbase.com/en/coinbase/trading-and-funding/coinbase-card/coinbase-card-for-the-us
-  - URL: https://www.crypto.com/cards/
-  - Date: 2026-04-23 accessed
-  - Summary: Bybit / Coinbase / Crypto.com cards connect exchange or crypto balances into traditional card networks, but the funding source, tax treatment, and regulatory risk differ from Wise's fiat card
-  - Trust: `primary`
-  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
-
-### Market Card Taxonomy / Local Card Schemes
-
-- **Debit / credit / prepaid / benefit-card baseline categories**
-  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
-  - URL: https://www.consumerfinance.gov/consumer-tools/credit-cards/
-  - Date: 2026-04-23 accessed
-  - Summary: CFPB consumer materials are used to distinguish credit cards, prepaid cards, payroll cards, and government benefit cards
+  - Summary: Payoneer / Wise are used as cross-border fiat-account and card tools for traders, affiliates, distributed teams, and platform operators
   - Trust: `primary`
   - Related: `04-relationships/09-card-taxonomy.md`
 
-- **International card schemes and ATM networks**
-  - URL: https://newsroom.mastercard.com/news/europe/en/perspectives/en/2021/blog-from-valerie-nowak-why-this-maestro-is-retiring-after-30-years/
-  - URL: https://www.mastercard.com/us/en/personal/get-support/atm-near-me.html
-  - URL: https://www.discoverglobalnetwork.com/
-  - URL: https://www.global.jcb/en/
-  - URL: https://www.rupay.co.in/
-  - Date: 2026-04-23 accessed
-  - Summary: official materials for Maestro, Cirrus, Discover, JCB, RuPay, and related card-network positioning
-  - Trust: `primary`
-  - Related: `04-relationships/09-card-taxonomy.md`
-
-- **Regional domestic card networks**
-  - URL: https://www.interac.ca/en/consumers/products/interac-debit/
-  - URL: https://www.eftposaustralia.com.au/
+- **Local card networks affecting deposit success by country**
+  - URL: https://www.unionpayintl.com/en/
+  - URL: https://www.interac.ca/en/payments/personal/pay-with-interac-debit/
   - URL: https://www.girocard.eu/
+  - URL: https://www.eftposaustralia.com.au/
   - URL: https://www.cartes-bancaires.com/
   - URL: https://www.bancontact.com/
-  - URL: https://www.dankort.dk/
-  - URL: https://www.mada.com.sa/
-  - URL: https://www.elo.com.br/
+  - URL: https://dankort.dk/
   - Date: 2026-04-23 accessed
-  - Summary: used to classify domestic card networks in Canada, Australia, Germany, France, Belgium, Denmark, Saudi Arabia, Brazil, and similar markets
+  - Summary: domestic debit/card networks shape trading-platform payment coverage, cost, and success rates in each market; they are part of platform localization capability
   - Trust: `primary`
   - Related: `04-relationships/09-card-taxonomy.md`
 

@@ -1,338 +1,328 @@
-# Wise Card × Debit / Credit / Virtual / Crypto Cards: The Payment Card Stack
+# Wise Card × Trading Platform Funding Rails: Bank Cards, Card Schemes, and Trading Accounts
 
-> Beginner-oriented note: place the Wise Card inside the broader card payment network, then compare it with debit cards, credit cards, prepaid cards, travel cards, virtual cards, Apple Pay / Google Pay, and crypto cards such as Bybit / Coinbase. Last checked: 2026-04-23.
+> This page keeps only what matters for this project: how cards serve brokers, crypto exchanges, cross-border payout accounts, and trading platforms in deposits, withdrawals, FX, and spend-card retention. Last checked: 2026-04-23.
 
 ---
 
 ## One-Line Takeaway
 
-**The Wise Card is not a credit card, and it is not Visa / Mastercard itself. It is an international debit/prepaid-style payment card attached to a Wise multi-currency account, running over card networks such as Visa or Mastercard.**
+**From a trading-platform perspective, a card is not just a consumer spending tool. It is a high-conversion, high-fee, high-fraud-risk funding and withdrawal rail.**
 
-Core mental model:
+More precisely:
 
-- **Wise**: account, balances, FX conversion, app, risk controls, and user relationship.
-- **Wise Card**: card interface that connects Wise balances to merchants, POS terminals, online checkout, and ATMs.
-- **Visa / Mastercard**: card schemes / payment networks; they are not automatically the card issuer.
-- **Issuer / banking partner**: region-dependent entity handling card issuance, BIN, compliance, and settlement role.
-- **Apple Pay / Google Pay**: not new cards; they tokenize existing cards into a mobile wallet.
+- **Wise Card**: closer to a cross-border fiat account interface, useful for multi-currency receipt, conversion, spending, and small-scale treasury movement.
+- **Bank debit / credit cards**: one of the most common retail fiat funding rails, but with large differences in fraud, refunds, and availability.
+- **Visa / Mastercard / UnionPay**: routing and rules layers, not the trading platform itself.
+- **Exchange / broker cards**: not a funding rail, but a retention product that repackages platform balances into spendable balances.
 
-Analogy:
+What this project actually cares about is not “which card has the best cashback,” but:
 
 ```text
-Wise account = wallet and FX account
-Wise Card = card interface extending that wallet to merchants and ATMs
-Visa / Mastercard = card transaction highway
-Bank / issuer = licensed card issuance and settlement role
+how users fund trading accounts with fiat
+how platforms manage chargebacks and fraud
+why card funding is fast but expensive
+why withdrawals often return to the original card
+why Wise / Payoneer / local debit cards play different roles around trading platforms
 ```
 
 ---
 
-## 1. Payment Card Stack: Who Does What
+## 1. Why Trading Platforms Care About Cards
+
+For trading platforms, cards serve four core roles.
+
+### 1) Acquisition rail
+
+- For first-time retail funding, **debit / credit cards** are often the easiest method.
+- Cards reduce friction versus wire transfers or ACH settlement delays.
+- This matters especially for crypto exchanges: users can buy crypto first, then start trading immediately.
+
+### 2) Faster usable funds
+
+- Coinbase has long positioned **debit card purchase** as a faster path to usable funds.
+- Bybit pushes bank-card purchase inside One-Click Buy.
+- This matters for users who want to open positions quickly.
+
+### 3) Refund path and return-to-source
+
+- eToro explicitly states that if you funded with a debit card, withdrawal will usually first be processed as a **refund to the original payment method**.
+- That is not just UX design; it is a payments-compliance and AML-control pattern.
+
+### 4) Retention and walletization
+
+- Robinhood Cash Card, Coinbase Card, and Bybit Card are not primarily about inbound funding.
+- They extend platform balances into daily spending and cash-management behavior.
+- In business terms, they turn a trading account into a stickier money account.
+
+---
+
+## 2. The Card Payment Chain Inside a Trading Platform
 
 ```mermaid
 flowchart LR
-  USER[Cardholder]
-  APP[Wise / bank / exchange app]
-  CARD[Physical card / virtual card / wallet token]
-  MERCHANT[Merchant / ATM]
-  ACQ[Acquirer / payment service provider]
-  NETWORK[Visa / Mastercard / UnionPay / Amex]
-  ISSUER[Issuer / bank / EMI]
-  BALANCE[Account balance / credit line / crypto asset]
+  USER[User]
+  CARD[Bank card / Wise card / local debit card]
+  PSP[Processor / acquirer / 3DS risk layer]
+  PLATFORM[Broker / exchange / multi-currency account]
+  LEDGER[Internal ledger]
+  BANK[Bank account / card statement]
+  WITHDRAW[Withdrawal / refund to original rail]
 
-  USER --> APP
-  APP --> CARD
-  USER -->|tap / insert / swipe / online checkout| MERCHANT
-  MERCHANT --> ACQ
-  ACQ --> NETWORK
-  NETWORK --> ISSUER
-  ISSUER --> BALANCE
-  BALANCE --> ISSUER
-  ISSUER --> NETWORK
-  NETWORK --> ACQ
-  ACQ --> MERCHANT
+  USER --> CARD
+  CARD --> PSP
+  PSP --> PLATFORM
+  PLATFORM --> LEDGER
+  LEDGER --> WITHDRAW
+  WITHDRAW --> CARD
+  CARD --> BANK
 ```
 
-Key points:
+The platform does not mainly care about “payment success.” It cares about:
 
-- **Card product** is not the same as **card scheme**: Wise Card, Revolut Card, and Bybit Card are products; Visa / Mastercard / UnionPay are networks.
-- **Issuer** is not always the visible brand: many fintech cards rely on licensed banks, e-money institutions, or BIN sponsors behind the scenes.
-- **Merchants connect on the acquiring side**: merchants usually work with Stripe, Adyen, bank acquirers, or local payment processors, not directly with Wise.
-- **Card networks route and enforce rules**: Visa / Mastercard handle authorization routing, clearing, dispute rules, and acceptance networks.
-- **Funding source determines card type**: Wise balances make it debit/prepaid-like; bank credit lines make it credit; crypto-to-fiat conversion makes it a crypto card.
-
-### Where Visa / Mastercard / UnionPay / Amex Fit
-
-- **Visa / Mastercard**: typical four-party networks connecting cardholder, issuer, merchant, and acquirer; they usually do not directly lend to retail cardholders.
-- **UnionPay**: China's most important domestic card scheme and an international acceptance network; overseas usability depends on local merchants, ATMs, acquirers, and issuer settings.
-- **American Express**: both a network and often an issuer/merchant relationship owner; official materials emphasize its closed-loop network data and merchant-network capability.
-- **Wise / Revolut / Bybit / Coinbase**: card product brands or account platforms, not card schemes themselves.
+- Is the payment **reversible**?
+- Can it later become a **chargeback**?
+- Will the issuer or scheme classify it as **high-risk / quasi-cash**?
+- When can the platform safely release the funds for trading or off-platform withdrawal?
 
 ---
 
-## 2. What the Wise Card Is
+## 3. Three Main Card Roles Around Trading Platforms
 
-The Wise Card is the spending interface for a Wise multi-currency account. Its core value is not rewards; it is **cross-border spending and transparent FX conversion**.
+| Role | Typical products | Meaning inside trading platforms |
+|---|---|---|
+| Funding cards | Bank debit cards, credit cards, local debit rails | Move fiat into the trading account |
+| Cross-border account cards | Wise, Payoneer, Revolut Business | Support multi-currency receipt, treasury movement, and cross-border flows |
+| Platform spend cards | Coinbase Card, Bybit Card, Robinhood Cash Card | Turn platform balances into spendable balances and improve retention |
 
-### What the Wise Card can do
-
-- **In-person card spending / contactless**: use it at merchants supporting the relevant card network.
-- **Online payments**: pay with card number, expiry, and CVV.
-- **ATM withdrawals**: withdraw local cash, subject to free allowances, limits, and overage fees.
-- **Multi-currency spending**: if you hold the right currency balance, Wise uses it first; otherwise it converts automatically under Wise's rules.
-- **Physical + digital cards**: physical, digital, or virtual card support varies by region.
-- **Mobile wallets**: in supported regions, it can be added to Apple Pay / Google Pay.
-
-### What the Wise Card is not
-
-- **Not a credit card**: normally no credit line, no credit-building function, and no traditional revolving interest structure.
-- **Not a bank account itself**: the card accesses Wise balances; account features depend on jurisdiction and Wise's local licensing setup.
-- **Not a UnionPay card**: in mainland China and similar settings, it generally depends on Visa / Mastercard acceptance and does not replace a domestic UnionPay card.
-- **Not a universal travel card**: some merchants, countries, ATMs, deposits, offline transactions, or high-risk categories may fail.
-- **Not a crypto card**: Wise does not directly spend BTC / ETH / USDT as card funding balances.
+These should not be collapsed into one category.
 
 ---
 
-## 3. Wise Card vs Other Card Types
+## 4. Where the Wise Card Fits
 
-For a fuller card taxonomy, see [`09-card-taxonomy.md`](./09-card-taxonomy.md); this section keeps only the comparisons most relevant to Wise.
+Wise matters to this project not because it is a “good travel card,” but because it sits between **bank-account alternative, cross-border payout tool, and payment card**.
 
-| Type | Funding source | Examples | Best for | Relationship to Wise Card |
-|---|---|---|---|---|
-| Bank debit card | Bank checking/current account | Chase / HSBC debit | Domestic spending, salary account, ATM | Similar debit experience, but Wise uses multi-currency Wise balances |
-| Credit card | Bank credit line | Visa / Mastercard / Amex credit cards | Deferred payment, rewards, insurance, deposits | Wise Card is not credit; no credit line or rewards-first model |
-| Prepaid card | Preloaded funds | Travel prepaid cards, gift cards | Budget control, temporary spending | Wise has prepaid traits, but adds multi-currency account and FX |
-| Multi-currency travel card | Multi-currency balance + card | Wise, Revolut, YouTrip | Travel, cross-border spending | Wise is a leading example of this category |
-| Virtual card | Digital-only card number | Wise digital card, Revolut virtual card | Online shopping, subscriptions, risk separation | Wise digital cards still run over card networks |
-| Mobile wallet card | Tokenized card in phone | Apple Pay, Google Pay | Tap-to-pay, app checkout | Wise Card can be added; Apple Pay is not the issuer |
-| Crypto card | Exchange balance or crypto asset conversion | Bybit Card, Coinbase Card, Crypto.com Card | Spending crypto balances, cashback | Same card-network rails, different funding and regulatory risk |
-| Business / corporate card | Company account or spend management limit | Brex, Ramp, Wise Business Card | Team expenses, SaaS subscriptions | Wise Business Card emphasizes cross-border and multi-currency spend |
-| Local payment card | Domestic scheme and bank account | UnionPay, Interac, EFTPOS | High domestic acceptance | Wise is stronger cross-border; domestic coverage may be weaker |
+### Why Wise matters in platform-adjacent finance
 
----
+- **Multi-currency balances**: useful for USD, EUR, GBP, and other fiat routing.
+- **Transparent FX**: attractive for traders, freelancers, creators, and distributed teams.
+- **Card + account bundle**: receipt, conversion, and spending in one stack.
+- **Small cross-border treasury**: lighter than traditional international banking for many users.
 
-## 4. Wise Card vs Bank Debit Card
+### What Wise is not
 
-### Strengths of bank debit cards
+- Not the core clearing account of a broker or exchange.
+- Not a card scheme.
+- Not the custody layer for securities or crypto assets.
+- Not the final solution for large institutional treasury movement.
 
-- Strong local ATM and domestic acquiring network coverage.
-- Usually connected to salary, rent, bills, loans, and credit history.
-- More mature in local consumer-protection and banking frameworks.
-- May support local schemes such as UnionPay, Interac, EFTPOS, or Girocard.
-
-### Strengths of the Wise Card
-
-- Clearer multi-currency balances and cross-border FX experience.
-- Can reduce opaque foreign-exchange markups from traditional banks.
-- Lets users hold currencies such as USD, EUR, GBP, and JPY in advance.
-- Useful for freelancers, cross-border income, travel, and foreign online shopping.
-
-### Key difference
+In one sentence:
 
 ```text
-Bank debit card = spending interface for a domestic bank account
-Wise Card = global spending interface for Wise multi-currency balances
+Wise is better understood as a cross-border fiat tool around trading platforms,
+not as core trading, clearing, or custody infrastructure.
 ```
 
-If you live mainly in one country, a local bank debit card is core infrastructure. If you frequently travel, shop cross-border, or receive foreign currency, Wise is a useful complement.
-
 ---
 
-## 5. Wise Card vs Credit Card
+## 5. Wise Card vs Bank Debit Card for Trading Funding
 
-Credit cards and Wise Cards operate on very different logic.
-
-| Dimension | Wise Card | Credit card |
+| Dimension | Wise Card | Bank debit card |
 |---|---|---|
-| Funding | Existing Wise balance | Bank credit line |
-| Borrowing | Usually no | Yes, spend first and repay later |
-| Interest | No revolving credit interest | High interest if revolving or late |
-| Points / miles | Not the core value | Often a core value |
-| Hotel / rental car deposits | May be limited | Usually better suited |
-| Building credit history | Usually no | Yes |
-| FX transparency | Strong | Depends on bank and scheme fees |
+| Underlying account | Multi-currency fintech account | Bank checking/current account |
+| Trading-platform acceptance | Inconsistent; depends on platform and acquiring rules | Higher, especially in domestic markets |
+| Main advantage | Cross-border FX and multi-currency balances | Clearer domestic funding, withdrawal, and refund path |
+| Main limitation | Merchant-category, region, and platform risk rules may block it | FX markups, cross-border card failure, international fees |
+| Best fit | Cross-border life, international ops, auxiliary funding | Primary local funding rail |
 
-Beginner rule:
+For trading-platform users:
 
-- **Budget control / travel / cross-border shopping**: Wise Card is easier to reason about.
-- **Points, miles, travel insurance, deposits, purchase protection**: credit cards are stronger.
-- **Avoiding debt and interest**: Wise Card is less likely to create revolving debt.
+- **Local bank debit card** is closer to the main funding weapon.
+- **Wise Card** is closer to an auxiliary cross-border tool.
 
 ---
 
-## 6. Wise Card vs Revolut / YouTrip / Monzo / N26
+## 6. Wise vs Payoneer in Platform Money Movement
 
-These products belong to the same broad category: **fintech multi-currency account + card spending**.
-
-Shared traits:
-
-- App onboarding, card spending, visible exchange rates, and cross-border payments.
-- Most support physical cards, virtual cards, Apple Pay / Google Pay.
-- Most rely on Visa / Mastercard rails.
-- Licensing and protection mechanisms vary by jurisdiction.
-
-Wise's relative position:
-
-- More focused on **cross-border transfers and transparent real FX cost**.
-- Stronger remittance routes and local receiving account capabilities.
-- Does not center crypto, stock trading, social finance, or high-frequency trading.
-- Best fit: “I need multi-currency receiving, conversion, and spending,” not “I want a super-app.”
-
-Revolut / Monzo / N26 often look more like neobanks or broad financial apps, bundling budgeting, investing, crypto, insurance, subscriptions, or family accounts.
-
----
-
-## 7. Wise Card vs Payoneer Card
-
-Wise and Payoneer both serve cross-border money movement, but their card positioning differs:
-
-| Dimension | Wise Card | Payoneer Card |
+| Dimension | Wise | Payoneer |
 |---|---|---|
-| Main users | Individuals, freelancers, travel, cross-border life | Cross-border sellers, ad spend, marketplace payouts, B2B payments |
-| Funding | Wise multi-currency balances | Payoneer USD / EUR / GBP / CAD balances |
-| Card network | Visa / Mastercard depending on region | Mostly Mastercard with a clear commercial-card positioning |
-| Typical use | Travel spending, foreign online shopping, daily small payments | Ads, SaaS, inventory, suppliers, company expenses |
-| Fee structure | Transparent FX and ATM rules | Commercial card fees, annual fees, cross-border and FX fees depend on account |
+| Typical user | Individuals, freelancers, cross-border life | Cross-border sellers, marketplace payouts, ad spend, B2B |
+| Main value | Receiving + FX + multi-currency spending | Marketplace payout + business payments + commercial card |
+| Meaning for trading platforms | Individual-level cross-border fiat movement | Business-level payout and seller/payment stack |
+| Card positioning | Account-attached spend card | More clearly commercial spend card |
 
-Simple rule:
+From the perspective of platform-adjacent finance:
+
+- **Wise** is closer to trader / freelancer / small operator use.
+- **Payoneer** is closer to seller / affiliate / business operator use.
+
+---
+
+## 7. Why Platforms Often Prefer Debit Over Credit
+
+Credit cards are not always “better” for trading platforms. Often they are harder.
+
+### Reason 1: cash advance / quasi-cash risk
+
+Bybit's Bank Card Terms explicitly warn that if you use a **credit card** to purchase crypto, your issuer may classify it as a **cash advance**.
+
+That means:
+
+- the user may face high cash-advance fees;
+- the issuer is more likely to block the transaction;
+- the platform may see higher failure and dispute rates.
+
+### Reason 2: greater chargeback exposure
+
+Card funding is fundamentally reversible.
+
+For the platform:
+
+- bank transfers are harder to reverse once settled;
+- credit-card funding is more exposed to cardholder disputes and chargebacks;
+- if crypto has already been delivered and the card payment is reversed, the platform eats the loss.
+
+### Reason 3: regional compliance restrictions
+
+Different countries treat “credit card purchase of securities / crypto / CFDs” differently.
+
+So many platforms end up with rules such as:
+
+- debit cards only, no credit cards;
+- only certain countries or issuer BINs;
+- only cards that support 3D Secure.
+
+---
+
+## 8. Why Withdrawals Often Go Back to the Original Card
+
+This is one of the most financial, least intuitive pieces of the topic.
+
+eToro's official FAQ states that:
+
+- the platform may return funds to the payment method originally used for deposits;
+- if a debit card funded the account, withdrawal will usually first be processed as a **refund**.
+
+The financial logic is:
+
+### 1) AML and source-of-funds control
+
+The platform wants to prove:
+
+- where the money came from;
+- where it goes back;
+- that the path matches the identity of the account holder.
+
+### 2) Scheme and acquirer rules
+
+In many card contexts, refunding the original transaction rail is more compliant than paying out to a new arbitrary card.
+
+### 3) Fraud control
+
+If the platform allows “any card in, any bank account out,” it becomes easier to exploit for laundering and stolen-card flows.
+
+So the common logic becomes:
 
 ```text
-Wise is closer to “cross-border fiat account + card for individuals and small teams.”
-Payoneer is closer to “commercial payout account + card for cross-border sellers and platforms.”
+refund the original funding source first
+then pay profit or excess proceeds through bank transfer or backup withdrawal rails
 ```
 
-If your income comes from Amazon, TikTok, Upwork, ad spend, or B2B marketplaces, Payoneer's commercial-card positioning may fit better. If your main need is travel, study abroad, foreign online shopping, freelance income, and FX conversion, Wise is usually easier to understand.
-
 ---
 
-## 8. Wise Card vs Crypto Exchange Cards
+## 9. Platform Cards Are a Different Business Line
 
-Bybit Card, Coinbase Card, and Crypto.com Visa Card are a different category: **exchange / crypto balances connected to traditional card networks**.
+These cards are not primarily inbound-funding tools. They turn platform balances into spendable balances.
 
-```mermaid
-flowchart LR
-  CRYPTO[BTC / ETH / USDT / exchange balance]
-  EX[Bybit / Coinbase / Crypto.com]
-  CONVERT[real-time sale / stablecoin debit / fiat balance]
-  CARD[Visa / Mastercard card]
-  MERCHANT[Merchant]
-
-  CRYPTO --> EX
-  EX --> CONVERT
-  CONVERT --> CARD
-  CARD --> MERCHANT
-```
-
-| Dimension | Wise Card | Crypto exchange card |
+| Platform card | Underlying funds | Business purpose |
 |---|---|---|
-| Funding | Fiat multi-currency balances | Crypto assets, stablecoins, or exchange fiat balances |
-| Main value | FX, cross-border payments, transparent fees | Spend crypto, cashback, exchange benefits |
-| Risks | Availability, account review, FX fees | Exchange risk, volatility, tax records, regulatory change |
-| Tax complexity | Relatively lower | Each spend may create asset-disposal records |
-| Beginner friendliness | Higher | Depends on crypto and tax understanding |
+| Coinbase Card | available crypto or USD balance | make trading-account balances spendable |
+| Bybit Card | exchange assets / fiat or stablecoin balance | improve walletization and retention |
+| Robinhood Cash Card | Robinhood Spending Account balance | extend broker app into a cash-management account |
 
-Key distinction: **Wise Card makes fiat money more cross-border; crypto cards package crypto assets into fiat spending.**
+Robinhood's own materials are explicit:
 
----
+- Robinhood Cash Card is issued by **Sutton Bank**;
+- it is tied to a **spending account**, not directly to trading itself.
 
-## 9. Physical, Virtual, Digital, and Mobile Wallet Cards
+Commercially, these cards matter because they:
 
-These are not mutually exclusive types. They are different wrappers around card credentials:
-
-| Name | Essence | Typical use |
-|---|---|---|
-| Physical card | Plastic card with chip / magstripe / NFC | In-person spending, ATMs |
-| Digital card | Card details shown in the app | Immediate online spending |
-| Virtual card | Independently generated / replaceable card number | Subscriptions, online shopping, risk segmentation |
-| Single-use virtual card | Card number changes per transaction | Higher-risk merchant trials |
-| Apple Pay / Google Pay | Tokenized card in a mobile wallet | Tap-to-pay, in-app checkout |
-
-Wise digital / virtual cards and physical cards still sit behind the same account system. Apple Pay / Google Pay replace the card number with a device token for convenience and security; they do not determine FX rate, fees, or card eligibility.
+- raise daily engagement;
+- keep more balances inside the platform;
+- move the platform from “trading app” toward “wallet / money account.”
 
 ---
 
-## 10. Common Misconceptions in China / Asia
+## 10. What Is In Scope for This Project
 
-> Exact availability depends on Wise and local regulation; this section explains mechanisms, not account-opening advice.
+### High relevance
 
-- **Having a Wise Card does not mean having a local Chinese bank card**: it does not replace UnionPay debit infrastructure.
-- **A Visa / Mastercard logo does not mean universal acceptance**: many mainland China merchants rely on Alipay, WeChat Pay, UnionPay, and local acquiring.
-- **ATM usability can vary**: it depends on the ATM, international network support, and issuer restrictions.
-- **Deposit scenarios can be tricky**: hotels, rental cars, gas stations, and offline pre-authorizations may not like debit/prepaid-style cards.
-- **Wise service coverage changes**: card eligibility, delivery, balances, fees, and mobile wallet support vary by country/region.
+- Bank debit / credit cards as retail funding rails.
+- Wise / Payoneer / Revolut Business as cross-border fiat tools.
+- Exchange / broker spend cards as retention products.
+- Visa / Mastercard / UnionPay as card-routing layers.
+- Local debit networks because they shape domestic deposit success rates.
 
----
+### Medium relevance
 
-## 11. Beginner Decision Guide
+- Business / corporate cards for platform operating expenses, ad spend, and SaaS.
+- ATM networks where cash access and regional acceptance matter.
 
-### If you mostly live in one country
+### Low relevance / mostly out of scope
 
-- Local bank debit card + a suitable credit card is the foundation.
-- Wise Card is a cross-border shopping, travel, and receiving complement.
-
-### If you travel or shop internationally
-
-- Wise Card is useful for pre-converting currency, holding multi-currency balances, and daily spending.
-- Credit cards are stronger for hotels, rental cars, rewards, insurance, and high-value purchase protection.
-
-### If you receive foreign-currency income
-
-- Wise is useful for receiving, converting, transferring, and spending foreign currency.
-- Local bank accounts remain important for taxes, salary, loans, and long-term savings.
-
-### If you hold crypto
-
-- Crypto cards help connect exchange assets to everyday spending.
-- Each spend can involve asset sale, tax records, exchange controls, and regulatory risk.
-- Wise Card is not for directly spending crypto assets.
+- Campus cards, gift cards, gaming cards, meal cards, transit cards.
+- They are real card types, but not a core part of the trading-platform atlas thesis.
 
 ---
 
-## 12. Risk Checklist
+## 11. The Financial Nature of Card Rails in Trading
 
-| Risk | Where it appears | Control |
-|---|---|---|
-| Regional unavailability | Applying for Wise or exchange cards | Check official supported countries first |
-| Fee misunderstanding | Cross-currency spending, ATM withdrawal | Read Wise fee and ATM allowance pages |
-| Merchant rejection | Deposits, offline transactions, high-risk merchants | Carry backup credit/local card |
-| FX volatility | Pre-conversion or automatic conversion | Convert in smaller batches; do not mix payment tools with speculation |
-| Account review | Large cross-border flows | Keep source-of-funds documents and invoices |
-| Card fraud | Online shopping, subscriptions, lost card | Use virtual cards, spending limits, instant freeze |
-| Tax record complexity | Crypto card spending | Track each asset disposal and cost basis |
-| Network limitation | Specific country / ATM / merchant | Carry a second network card, e.g. Visa + Mastercard / local card |
-
----
-
-## 13. Relationship Summary
+For trading platforms, card rails are fundamentally:
 
 ```text
-The Wise Card is not “another Visa.” It is Wise's product that connects multi-currency balances to Visa / Mastercard rails.
+high-conversion acquisition rails
++ high payment cost
++ high chargeback risk
++ strong geographic dependence
++ strong compliance dependence
+```
 
-Bank debit cards solve domestic everyday payments.
-Credit cards solve credit, rewards, and deposits.
-Wise Card solves cross-border fiat spending and FX.
-Revolut / N26 / Monzo solve neobank app experience.
-Bybit / Coinbase / Crypto.com cards solve crypto-to-spend access.
-Apple Pay / Google Pay solve tokenized mobile payments.
-Visa / Mastercard / UnionPay / Amex solve global or local card-network routing.
+That is why platforms usually converge on a mix like:
+
+- **retail funding**: cards + bank transfer + local wallets + P2P + third-party pay-ins;
+- **larger tickets**: bank transfer dominates;
+- **instant access**: debit card is favored;
+- **retention**: the platform later issues its own debit/spend card.
+
+---
+
+## 12. Conclusion
+
+From this project's perspective:
+
+- **Wise Card** should not be framed as a generic travel card. It belongs in the **cross-border fiat funding layer**.
+- **Bank cards** are not merely spending tools; they are one of the most important retail funding rails in trading.
+- **Visa / Mastercard / UnionPay** are rule-and-routing layers that platforms must integrate with.
+- **Broker / exchange cards** are extensions of balance walletization and retention strategy.
+
+If you remember one line:
+
+```text
+Inside trading platforms, cards are funding rails first and consumer spend tools second.
 ```
 
 ---
 
-## 14. Official Sources
+## 13. Official Sources
 
 - [Wise Card](https://wise.com/card/)
-- [Wise Help: What are the Wise card fees?](https://wise.com/help/articles/2935769/what-are-the-wise-card-fees)
-- [Wise Help: Getting a Wise card](https://wise.com/help/articles/2968915/can-i-get-the-wise-card-in-my-country)
-- [Wise Help: Spending abroad with your card](https://wise.com/help/articles/2935771/how-do-i-use-my-wise-card-abroad)
-- [Wise: Virtual Card](https://wise.com/us/virtual-card/)
-- [Wise Help: Apple Pay / Google Pay](https://wise.com/help/articles/2978018/can-i-use-my-wise-card-with-apple-pay-or-google-pay)
-- [Visa: Accept Visa payments](https://usa.visa.com/run-your-business/accept-visa-payments.html)
-- [Mastercard: How payments work](https://www.mastercard.us/en-us/business/overview/payment-processing.html)
-- [UnionPay International](https://www.unionpayintl.com/en/)
-- [American Express Global Network](https://network.americanexpress.com/globalnetwork/v4/partners/acquirers/power-of-the-network/)
-- [CFPB: Prepaid cards](https://www.consumerfinance.gov/consumer-tools/prepaid-cards/)
-- [Payoneer Commercial Mastercard](https://www.payoneer.com/solutions/payoneer-commercial-card/)
-- [Bybit Card](https://www.bybit.com/en/help-center/article/Bybit-Card-Introduction)
-- [Coinbase Card](https://help.coinbase.com/en/coinbase/trading-and-funding/coinbase-card/coinbase-card-for-the-us)
-- [Crypto.com Visa Card](https://www.crypto.com/cards/)
+- [Bybit — How to Buy Coins with Your Bank Card](https://www.bybit.com/en/help-center/article/How-to-Buy-Coins-with-Your-Credit-Debit-Card-on-Bybit)
+- [Bybit — FAQ Bank Card Payments](https://www.bybit-global.com/en/help-center/article/FAQ-Bank-Card-Payments)
+- [Bybit — Bank Card Terms of Use](https://www.bybit.com/en/help-center/article/?id=000001639)
+- [eToro — Deposit FAQ](https://www.etoro.com/en-us/customer-service/deposit-faq/)
+- [eToro — Withdraw FAQ](https://www.etoro.com/en-us/customer-service/withdraw-faq/)
+- [Coinbase — Using a bank account as a payment method](https://help.coinbase.com/en/pro/getting-started/adding-a-payment-method/using-a-bank-account-as-a-payment-method-for-us-customers)
+- [Coinbase — Add a payment method troubleshooting](https://help.coinbase.com/en/coinbase/getting-started/add-a-payment-method/add-a-payment-method-troubleshooting)
+- [Coinbase Card — Use your Coinbase debit card](https://help.coinbase.com/coinbase/trading-and-funding/coinbase-card/use-cb-card)
+- [Robinhood — Robinhood Cash Card](https://robinhood.com/us/en/support/articles/robinhood-cash-card/)
+- [Robinhood — What’s a spending account?](https://robinhood.com/support/articles/what-is-a-robinhood-spending-account/)

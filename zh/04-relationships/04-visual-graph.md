@@ -193,31 +193,25 @@ graph LR
 
 详见：[`07-bybit-mantle.md`](./07-bybit-mantle.md)
 
-## Wise 卡 × 支付卡栈：从 App 到卡组织
+## Wise / 银行卡 × 交易平台资金通道
 
 ```mermaid
 flowchart LR
-  USER[持卡人]
-  WISE[Wise<br/>多币种账户 + 换汇]
-  BANK[本地银行<br/>借记卡 / 信用卡]
-  CRYPTO[交易所<br/>Bybit / Coinbase Card]
-  WALLET[Apple Pay / Google Pay<br/>Token 钱包]
-  CARD[实体卡 / 虚拟卡 / 手机 token]
-  NETWORK[Visa / Mastercard / UnionPay / Amex]
-  ACQ[收单行 / PSP<br/>Stripe / Adyen / 银行]
-  MERCHANT[商户 / ATM]
+  USER[交易用户]
+  BANKCARD[银行借记卡 / 信用卡]
+  WISE[Wise / Payoneer<br/>跨境法币账户]
+  PSP[收单方 / PSP / 3DS 风控]
+  PLATFORM[券商 / 加密所]
+  LEDGER[平台内部账本]
+  TRADE[交易 / 买币 / 开仓]
+  REFUND[提现 / 原路退款]
+  SPENDCARD[平台消费卡<br/>Coinbase / Bybit / Robinhood]
 
-  USER --> WISE
-  USER --> BANK
-  USER --> CRYPTO
-  WISE --> CARD
-  BANK --> CARD
-  CRYPTO --> CARD
-  CARD --> WALLET
-  CARD --> NETWORK
-  WALLET --> NETWORK
-  NETWORK --> ACQ
-  ACQ --> MERCHANT
+  USER --> BANKCARD --> PSP --> PLATFORM
+  USER --> WISE --> PSP
+  PLATFORM --> LEDGER --> TRADE
+  LEDGER --> REFUND --> BANKCARD
+  LEDGER --> SPENDCARD --> USER
 
   classDef user fill:#059669,color:#fff
   classDef account fill:#0369a1,color:#fff
@@ -226,57 +220,41 @@ flowchart LR
   classDef merchant fill:#dc2626,color:#fff
 
   class USER user
-  class WISE,BANK,CRYPTO account
-  class CARD,WALLET card
-  class NETWORK,ACQ network
-  class MERCHANT merchant
+  class WISE,PLATFORM,LEDGER account
+  class BANKCARD,SPENDCARD card
+  class PSP network
+  class TRADE,REFUND merchant
 ```
 
 详见：[`08-wise-card-payment-card-stack.md`](./08-wise-card-payment-card-stack.md)
 
-## 市面卡分类：资金来源 × 网络 × 形态
+## 交易平台相关卡分类
 
 ```mermaid
 mindmap
-  root((支付卡))
-    资金来源
+  root((交易平台相关卡))
+    入金卡
       借记卡
       信用卡
-      签账卡
-      预付卡
-      礼品卡
-      加密卡
-      福利卡
-    卡组织网络
-      Visa
-      Mastercard
-      Maestro
+      本地 debit 网络
+    跨境法币工具
+      Wise
+      Payoneer
+      Revolut Business
+    平台消费卡
+      Coinbase Card
+      Bybit Card
+      Robinhood Cash Card
+    本地网络
       UnionPay
-      Amex
-      JCB
-      Discover
-      本地网络
-    使用形态
-      实体卡
-      虚拟卡
-      数字卡
-      一次性卡
-      Apple Pay / Google Pay
-      ATM-only
-    用户类型
-      个人卡
-      学生卡
-      商务卡
-      公司卡
-      政府卡
-    用途
-      旅行卡
-      航司酒店卡
-      返现卡
-      油卡
-      医疗卡
-      交通卡
-      餐补卡
+      Interac
+      girocard
+      eftpos
+      CB
+    运营支出卡
+      Business card
+      Corporate card
+      P-card
 ```
 
 详见：[`09-card-taxonomy.md`](./09-card-taxonomy.md)

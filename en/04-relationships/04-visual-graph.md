@@ -193,31 +193,25 @@ graph LR
 
 See: [`07-bybit-mantle.md`](./07-bybit-mantle.md)
 
-## Wise Card × Payment Card Stack: App to Card Scheme
+## Wise / Bank Cards × Trading Platform Funding Rails
 
 ```mermaid
 flowchart LR
-  USER[Cardholder]
-  WISE[Wise<br/>multi-currency account + FX]
-  BANK[Local bank<br/>debit / credit card]
-  CRYPTO[Exchange<br/>Bybit / Coinbase Card]
-  WALLET[Apple Pay / Google Pay<br/>token wallet]
-  CARD[Physical card / virtual card / mobile token]
-  NETWORK[Visa / Mastercard / UnionPay / Amex]
-  ACQ[Acquirer / PSP<br/>Stripe / Adyen / bank]
-  MERCHANT[Merchant / ATM]
+  USER[Trading user]
+  BANKCARD[Bank debit / credit card]
+  WISE[Wise / Payoneer<br/>cross-border fiat account]
+  PSP[Acquirer / PSP / 3DS risk layer]
+  PLATFORM[Broker / crypto exchange]
+  LEDGER[Internal ledger]
+  TRADE[Trade / buy crypto / open position]
+  REFUND[Withdrawal / refund to source]
+  SPENDCARD[Platform spend card<br/>Coinbase / Bybit / Robinhood]
 
-  USER --> WISE
-  USER --> BANK
-  USER --> CRYPTO
-  WISE --> CARD
-  BANK --> CARD
-  CRYPTO --> CARD
-  CARD --> WALLET
-  CARD --> NETWORK
-  WALLET --> NETWORK
-  NETWORK --> ACQ
-  ACQ --> MERCHANT
+  USER --> BANKCARD --> PSP --> PLATFORM
+  USER --> WISE --> PSP
+  PLATFORM --> LEDGER --> TRADE
+  LEDGER --> REFUND --> BANKCARD
+  LEDGER --> SPENDCARD --> USER
 
   classDef user fill:#059669,color:#fff
   classDef account fill:#0369a1,color:#fff
@@ -226,57 +220,41 @@ flowchart LR
   classDef merchant fill:#dc2626,color:#fff
 
   class USER user
-  class WISE,BANK,CRYPTO account
-  class CARD,WALLET card
-  class NETWORK,ACQ network
-  class MERCHANT merchant
+  class WISE,PLATFORM,LEDGER account
+  class BANKCARD,SPENDCARD card
+  class PSP network
+  class TRADE,REFUND merchant
 ```
 
 See: [`08-wise-card-payment-card-stack.md`](./08-wise-card-payment-card-stack.md)
 
-## Market Card Taxonomy: Funding × Network × Form
+## Trading-Platform-Relevant Card Taxonomy
 
 ```mermaid
 mindmap
-  root((Payment cards))
-    Funding
-      Debit
-      Credit
-      Charge
-      Prepaid
-      Gift
-      Crypto
-      Benefit
-    Card schemes
-      Visa
-      Mastercard
-      Maestro
+  root((Trading-platform-relevant cards))
+    Funding cards
+      Debit cards
+      Credit cards
+      Local debit rails
+    Cross-border fiat tools
+      Wise
+      Payoneer
+      Revolut Business
+    Platform spend cards
+      Coinbase Card
+      Bybit Card
+      Robinhood Cash Card
+    Local networks
       UnionPay
-      Amex
-      JCB
-      Discover
-      Local networks
-    Form factors
-      Physical
-      Virtual
-      Digital
-      Disposable
-      Apple Pay / Google Pay
-      ATM-only
-    User types
-      Consumer
-      Student
-      Business
-      Corporate
-      Government
-    Use cases
-      Travel
-      Airline / hotel
-      Cashback
-      Fuel
-      Healthcare
-      Transit
-      Meal benefits
+      Interac
+      girocard
+      eftpos
+      CB
+    Operating cards
+      Business card
+      Corporate card
+      P-card
 ```
 
 See: [`09-card-taxonomy.md`](./09-card-taxonomy.md)
