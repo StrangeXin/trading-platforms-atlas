@@ -48,6 +48,36 @@
   - Trust: `secondary` (multiple security firms independently analyzed)
   - Related: `02-platforms/bybit.md`
 
+### Bybit × BitDAO × Mantle
+
+- **Long-term Bybit contribution pledge to the BitDAO treasury**
+  - URL: https://docs.bitdao.io/partners/bybit-pledge
+  - Date: from 2021-07-15; updated subsequently
+  - Summary: BitDAO's official materials list Bybit as a core contributor, committing a share of derivatives volume to the treasury
+  - Trust: `primary`
+  - Related: `04-relationships/07-bybit-mantle.md`
+
+- **BIP-19: Mantle as BitDAO's core product direction**
+  - URL: https://forum.mantle.xyz/t/passed-bip-19-securing-the-future-with-mantle-a-comprehensive-plan/4533
+  - Date: 2023-02-21
+  - Summary: the community approved Mantle testnet, mainnet, and first-year operating budget; the proposal notes early Mantle development funding from Bybit
+  - Trust: `primary`
+  - Related: `04-relationships/07-bybit-mantle.md`
+
+- **BIP-20: shift Bybit contributions into a fixed 48-month plan**
+  - URL: https://discourse.bitdao.io/t/passed-bip-20-adjustments-to-bybit-contributions-to-the-bitdao-treasury-to-improve-tokenomics-project-focus-and-decentralization/4876
+  - Date: 2023-04-05
+  - Summary: BitDAO changed the Bybit contribution structure to improve BIT/Mantle independence and formalized a 48-month contribution schedule
+  - Trust: `primary`
+  - Related: `04-relationships/07-bybit-mantle.md`
+
+- **BIP-21: One brand, One token; BIT consolidated into MNT**
+  - URL: https://forum.mantle.xyz/t/passed-bip-21-optimization-of-brand-token-and-tokenomics/5327
+  - Date: 2023-05-19
+  - Summary: the BitDAO/Mantle community approved brand, token, and tokenomics optimization that consolidated BitDAO and Mantle under MNT
+  - Trust: `primary`
+  - Related: `04-relationships/07-bybit-mantle.md`
+
 ---
 
 ## Company Filings / Earnings
@@ -69,6 +99,97 @@
   - Date: 2024-09
   - Quote: "Revenue of £1.04 billion; net trading clients ~310,000"
   - Trust: `primary`
+
+---
+
+## Payment Cards / Cross-Border Payments
+
+### Wise Card × Payment Card Networks
+
+- **Wise Card official product page**
+  - URL: https://wise.com/card/
+  - Date: 2026-04-23 accessed
+  - Summary: Wise Card is the card-spending interface for Wise multi-currency accounts, used for in-person, online, and ATM scenarios; availability, fees, and issuance setup vary by region
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+- **Wise Card fees / availability / digital cards / mobile wallet help docs**
+  - URL: https://wise.com/help/articles/2935769/what-are-the-wise-card-fees
+  - URL: https://wise.com/help/articles/2968915/can-i-get-the-wise-card-in-my-country
+  - URL: https://wise.com/us/virtual-card/
+  - URL: https://wise.com/help/articles/2978018/can-i-use-my-wise-card-with-apple-pay-or-google-pay
+  - Date: 2026-04-23 accessed
+  - Summary: Wise official docs describe card fees, eligible countries, digital cards, and Apple Pay / Google Pay support; these rules vary by region and can change
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+- **Visa / Mastercard card network roles**
+  - URL: https://usa.visa.com/run-your-business/accept-visa-payments.html
+  - URL: https://www.mastercard.us/en-us/business/overview/payment-processing.html
+  - URL: https://www.unionpayintl.com/en/
+  - URL: https://network.americanexpress.com/globalnetwork/v4/partners/acquirers/power-of-the-network/
+  - Date: 2026-04-23 accessed
+  - Summary: card-scheme official materials are used to separate cardholder, merchant, acquirer, network, issuer, and settlement roles, including four-party networks, local networks, and the Amex closed-loop narrative
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+- **Payoneer Commercial Mastercard**
+  - URL: https://www.payoneer.com/solutions/payoneer-commercial-card/
+  - Date: 2026-04-23 accessed
+  - Summary: Payoneer's official commercial card page is used to compare against Wise Card: Payoneer is more seller/platform-payout and business-expense oriented
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+- **CFPB prepaid cards consumer guide**
+  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
+  - Date: 2026-04-23 accessed
+  - Summary: U.S. CFPB provides the regulatory consumer view for prepaid card definition, use cases, and cautions
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+- **Exchange card official docs**
+  - URL: https://www.bybit.com/en/help-center/article/Bybit-Card-Introduction
+  - URL: https://help.coinbase.com/en/coinbase/trading-and-funding/coinbase-card/coinbase-card-for-the-us
+  - URL: https://www.crypto.com/cards/
+  - Date: 2026-04-23 accessed
+  - Summary: Bybit / Coinbase / Crypto.com cards connect exchange or crypto balances into traditional card networks, but the funding source, tax treatment, and regulatory risk differ from Wise's fiat card
+  - Trust: `primary`
+  - Related: `04-relationships/08-wise-card-payment-card-stack.md`
+
+### Market Card Taxonomy / Local Card Schemes
+
+- **Debit / credit / prepaid / benefit-card baseline categories**
+  - URL: https://www.consumerfinance.gov/consumer-tools/prepaid-cards/
+  - URL: https://www.consumerfinance.gov/consumer-tools/credit-cards/
+  - Date: 2026-04-23 accessed
+  - Summary: CFPB consumer materials are used to distinguish credit cards, prepaid cards, payroll cards, and government benefit cards
+  - Trust: `primary`
+  - Related: `04-relationships/09-card-taxonomy.md`
+
+- **International card schemes and ATM networks**
+  - URL: https://newsroom.mastercard.com/news/europe/en/perspectives/en/2021/blog-from-valerie-nowak-why-this-maestro-is-retiring-after-30-years/
+  - URL: https://www.mastercard.com/us/en/personal/get-support/atm-near-me.html
+  - URL: https://www.discoverglobalnetwork.com/
+  - URL: https://www.global.jcb/en/
+  - URL: https://www.rupay.co.in/
+  - Date: 2026-04-23 accessed
+  - Summary: official materials for Maestro, Cirrus, Discover, JCB, RuPay, and related card-network positioning
+  - Trust: `primary`
+  - Related: `04-relationships/09-card-taxonomy.md`
+
+- **Regional domestic card networks**
+  - URL: https://www.interac.ca/en/consumers/products/interac-debit/
+  - URL: https://www.eftposaustralia.com.au/
+  - URL: https://www.girocard.eu/
+  - URL: https://www.cartes-bancaires.com/
+  - URL: https://www.bancontact.com/
+  - URL: https://www.dankort.dk/
+  - URL: https://www.mada.com.sa/
+  - URL: https://www.elo.com.br/
+  - Date: 2026-04-23 accessed
+  - Summary: used to classify domestic card networks in Canada, Australia, Germany, France, Belgium, Denmark, Saudi Arabia, Brazil, and similar markets
+  - Trust: `primary`
+  - Related: `04-relationships/09-card-taxonomy.md`
 
 ---
 
