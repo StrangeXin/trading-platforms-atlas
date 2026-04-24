@@ -19,6 +19,23 @@ Status: exploration
 
 **把网页版收费具体对接方式拆成可实现的 checkout、webhook、license、entitlement 和 access flow。**
 
+## Update
+
+This document describes the `merchant checkout` path.
+
+Because the current team preference is to avoid `PayPal`, `Paddle`, and similar providers for v0, the active near-term path should instead follow:
+
+- `docs/plans/2026-04-24-prop-firm-operator-alt-payment-manual-fulfillment-spec.md`
+
+That spec covers:
+
+- `Alipay QR`
+- `Bybit Pay`
+- `Binance Pay`
+- `Feishu webhook` review notifications
+- manual approval
+- email delivery of license keys
+
 ## 推荐方案
 
 ### v0 / v1 首选

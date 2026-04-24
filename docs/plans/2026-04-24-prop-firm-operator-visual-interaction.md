@@ -3,6 +3,24 @@
 Date: 2026-04-24
 Status: exploration
 
+## Update
+
+For the current prototype phase, the preferred production method is:
+
+- human-defined UI system
+- AI-generated visual assets and narrative inserts
+
+See:
+
+- `docs/plans/2026-04-24-prop-firm-operator-ai-design-pack-v0.md`
+
+That pack defines:
+
+- the chosen restrained art direction
+- which assets AI should generate
+- what AI should not generate
+- prompt structure for reusable visual output
+
 ## 核心判断
 
 这款产品的视觉方向不该走两端：

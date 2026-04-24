@@ -25,17 +25,15 @@ Status: exploration
 
 **Free Demo + Paid Founder Access**
 
-并优先使用：
+当前更贴近团队偏好的支付路径是：
 
-**Merchant of Record checkout**
-
-而不是一开始自接完整支付系统。
+**manual QR payments + manual fulfillment**
 
 推荐顺序：
 
-1. `itch.io` 或 `Lemon Squeezy` 快速验证付费意愿
-2. 如果需要更强嵌入式账号/授权，再评估 `Paddle` 或 `Stripe`
-3. 如果后续游戏商业化变重，再评估 `Xsolla`
+1. `支付宝二维码`、`Bybit Pay`、`Binance Pay` 先验证付费意愿
+2. 使用人工审核和 `license key` 解锁 Founder Access
+3. 当 paid volume 上来后，再评估更自动化的商户支付方案
 4. Steam 等 v1 证明后再上，不要第一站就上
 
 ## 为什么网页版收费要先解决
