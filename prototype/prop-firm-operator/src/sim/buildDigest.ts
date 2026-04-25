@@ -9,8 +9,7 @@ import type {
 } from "./types";
 
 function labelForResource(key: ResourceKey, value: number) {
-  const labels = statusLabels[key];
-  return labels.find((entry) => value >= entry.min)?.label ?? labels.at(-1)!.label;
+  return statusLabels[key](value);
 }
 
 function riskFrom(resources: Resources, counters: HiddenCounters): WeekDigest["riskCard"] {

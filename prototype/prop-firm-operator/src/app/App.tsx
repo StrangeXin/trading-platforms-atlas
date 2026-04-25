@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { eventCards } from "../data/events.seed";
 import { founderModes } from "../data/founder.seed";
 import { initialRunSeed } from "../data/run.seed";
 import { scenarios } from "../data/scenario.seed";
@@ -11,7 +10,8 @@ import {
   unlockReason,
 } from "../sim/controlAvailability";
 import { createInitialRun } from "../sim/createInitialRun";
-import { simulateWeek } from "../sim/simulateWeek";
+import { phaseForCurrentWeek, phaseLabel, zoneFor } from "../sim/resourceZones";
+import { peekWeekEvent, simulateWeek } from "../sim/simulateWeek";
 import type {
   ControlKey,
   ControlLevel,
@@ -54,15 +54,6 @@ function makeInitialRun() {
   });
 }
 
-function fixedEventForWeek(run: RunState) {
-  return eventCards.find(
-    (event) =>
-      event.minWeek === run.currentWeek &&
-      event.maxWeek === run.currentWeek &&
-      !run.triggeredEventIds.includes(event.id),
-  );
-}
-
 function deltaFor(run: RunState, key: ResourceKey) {
   const last = run.snapshots.at(-1);
   if (!last) return 0;
@@ -102,7 +93,7 @@ export function App() {
 
   function runWeek() {
     if (run.status === "ended") return;
-    const event = fixedEventForWeek(run);
+    const event = peekWeekEvent(run);
     if (event) {
       setPendingEvent(event);
       return;
@@ -128,6 +119,7 @@ export function App() {
         </div>
         <div className="run-meta">
           <span>Week {weekLabel}</span>
+          <span>{phaseLabel(phaseForCurrentWeek(weekLabel))}</span>
           <span>{founderModes[0].name}</span>
           <span>{scenarios[0].name}</span>
         </div>
@@ -136,10 +128,12 @@ export function App() {
       <section className="resource-grid" aria-label="Current resources">
         {(Object.keys(run.resources) as ResourceKey[]).map((key) => {
           const delta = deltaFor(run, key);
+          const zone = zoneFor(key, run.resources[key]);
           return (
             <article className="resource-card" key={key}>
               <span>{resourceLabels[key]}</span>
               <strong>{Math.round(run.resources[key])}</strong>
+              <em className={`zone zone-${zone.tone}`}>{zone.label}</em>
               <em className={delta < 0 ? "delta bad" : delta > 0 ? "delta good" : "delta"}>
                 {formatDelta(delta)}
               </em>

@@ -10,7 +10,8 @@
     "test:run": "vitest run",
     "smoke": "tsx src/dev/smokeRun.ts",
     "verify": "tsx src/dev/baselineRun.ts",
-    "tune": "tsx src/dev/tuneReport.ts"
+    "tune": "tsx src/dev/tuneReport.ts",
+    "sensitivity": "tsx src/dev/sensitivity.ts"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

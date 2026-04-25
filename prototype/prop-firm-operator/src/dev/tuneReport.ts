@@ -38,8 +38,20 @@ const RATIONAL_TIGHTENING: CheckpointTargets[] = [
   { week: 12, cash: [38, 66], flow: [25, 50], passRate: [3, 7], payoutLiability: [18, 38], trust: [18, 36], regulatoryHeat: [38, 58], complaintEcho: [55, 78] },
 ];
 
+// Pragmatic Dirty: between Dirty Growth and Pseudo Fair. Uses matrix
+// "Dirty Growth" Week 12 mid-zone (cash 50-72, trust 22-36) as anchor and
+// relaxes the regHeat / complaint upper bounds since this archetype
+// cooperates with processors and regulators.
+const PRAGMATIC_DIRTY: CheckpointTargets[] = [
+  { week: 3, cash: [62, 80], flow: [82, 100], passRate: [7, 12], trust: [38, 50], regulatoryHeat: [22, 32] },
+  { week: 6, cash: [66, 86], flow: [82, 100], passRate: [5, 10], payoutLiability: [22, 38], trust: [30, 44], regulatoryHeat: [28, 42] },
+  { week: 9, cash: [55, 80], flow: [70, 92], passRate: [4, 9], payoutLiability: [30, 50], trust: [22, 38], regulatoryHeat: [38, 56] },
+  { week: 12, cash: [45, 72], flow: [55, 82], passRate: [3, 8], payoutLiability: [38, 60], trust: [22, 36], regulatoryHeat: [42, 65] },
+];
+
 const ROUTE_TARGETS: Record<string, CheckpointTargets[]> = {
   dirty_growth: DIRTY_GROWTH,
+  pragmatic_dirty: PRAGMATIC_DIRTY,
   pseudo_fair: PSEUDO_FAIR,
   rational_tightening: RATIONAL_TIGHTENING,
 };

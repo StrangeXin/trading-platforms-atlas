@@ -104,6 +104,33 @@ h2 {
   color: var(--heat-amber);
 }
 
+.zone {
+  bottom: 12px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 550;
+  left: 12px;
+  letter-spacing: 0.02em;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.zone-good {
+  color: var(--growth-green, #4caf7c);
+}
+
+.zone-neutral {
+  color: var(--text-muted);
+}
+
+.zone-warning {
+  color: var(--heat-amber, #d6a35a);
+}
+
+.zone-critical {
+  color: #d05c5c;
+}
+
 .workbench {
   display: grid;
   gap: 14px;

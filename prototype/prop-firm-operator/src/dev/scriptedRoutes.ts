@@ -3,6 +3,7 @@ import { initialRunSeed } from "../data/run.seed";
 import { scenarios } from "../data/scenario.seed";
 import { createInitialRun } from "../sim/createInitialRun";
 import { simulateWeek } from "../sim/simulateWeek";
+import type { TuningConfig } from "../sim/tuningConfig";
 import type { ControlLevel, EventCard, PlayerControls, RunState } from "../sim/types";
 
 type ScriptedRoute = {
@@ -52,6 +53,30 @@ export const scriptedRoutes: ScriptedRoute[] = [
     },
   },
   {
+    // Mid-aggressive variant: still extracts cash via promo + amplification,
+    // but cooperates with regulators/processors. Tests whether matrix
+    // Week 12 Trust 18-36 + Cash 45-78 + diagnosis dirty_momentum band is
+    // reachable when the player isn't picking the absolute worst option
+    // for every conflict.
+    id: "pragmatic_dirty",
+    label: "Pragmatic Dirty",
+    controls: {
+      challengeFee: 4,
+      profitTarget: 4,
+      maxDrawdown: 2,
+      payoutSplit: 2,
+      marketingTone: 4,
+    },
+    optionByEvent: {
+      weekend_promo_temptation: "launch_the_promo",
+      feels_rigged_forum_post: "ease_one_rule_slightly",
+      viral_winner_thread: "amplify_it",
+      silent_winners_cluster: "watch_for_now",
+      payment_processor_warning: "cooperate_fully",
+      first_regulator_letter: "respond_and_tighten_up",
+    },
+  },
+  {
     id: "rational_tightening",
     label: "Rational Tightening",
     controls: {
@@ -80,12 +105,16 @@ export function createBaseRun() {
   });
 }
 
-export function runScriptedRoute(route: ScriptedRoute): RunState {
+export function runScriptedRoute(
+  route: ScriptedRoute,
+  tuningConfig?: TuningConfig,
+): RunState {
   let state = createBaseRun();
 
   while (state.status !== "ended") {
     state = simulateWeek(state, {
       controls: route.controls,
+      tuningConfig,
       chooseOption: (event: EventCard) =>
         route.optionByEvent[event.id] ?? event.options[0].id,
     });
@@ -94,9 +123,9 @@ export function runScriptedRoute(route: ScriptedRoute): RunState {
   return state;
 }
 
-export function runAllScriptedRoutes() {
+export function runAllScriptedRoutes(tuningConfig?: TuningConfig) {
   return scriptedRoutes.map((route) => ({
     route,
-    state: runScriptedRoute(route),
+    state: runScriptedRoute(route, tuningConfig),
   }));
 }
