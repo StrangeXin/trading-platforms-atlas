@@ -1,7 +1,7 @@
 # Prop Firm Operator 探索记录
 
 Date: 2026-04-24
-Status: exploration
+Status: research
 
 ## 当前结论
 

@@ -1,7 +1,7 @@
 # Prop Firm Operator — Commercial Packaging
 
 Date: 2026-04-24
-Status: exploration
+Status: phase2-commercial
 
 ## 核心判断
 

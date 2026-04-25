@@ -1,7 +1,7 @@
 # Prop Firm Operator — Research Map
 
 Date: 2026-04-24
-Status: exploration
+Status: research
 
 ## 这组文档现在分别回答什么
 

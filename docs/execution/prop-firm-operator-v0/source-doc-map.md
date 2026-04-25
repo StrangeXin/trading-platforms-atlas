@@ -3,6 +3,25 @@
 Date: 2026-04-24
 Status: reference
 
+## Status Taxonomy
+
+Every doc in `docs/plans/` carries a `Status:` line in its header. Values and meanings:
+
+- `v0-control` — execution control (work order, handoff, scope, tickets)
+- `v0-scaffold` — app structure, data schema, README/changelog
+- `v0-sim` — simulation formulas, balancing, run spec, tuning
+- `v0-content` — events, narrative copy, scenario/founder seed content
+- `v0-ui` — control room layout, dashboard IA, interaction spec
+- `v0-assets` — visual asset production (AI pack, shot list)
+- `v0-playtest` — acceptance gates, playtest runbook, risk register
+- `phase2-commercial` — Phase 2 only; do not widen v0 scope
+- `post-v0` — deferred design (extra founders, scenarios, meta-progression)
+- `research` — exploratory context; not a ticket
+- `meta` — documentation-level housekeeping
+
+When adding a new plan doc, pick the closest category and record it in the header.
+If a doc genuinely spans two, list the primary one and call out the secondary in prose.
+
 ## How To Use This Map
 
 Use this file when implementation needs deeper context. Do not read every planning document before every task.
@@ -54,6 +73,7 @@ Use for:
 
 - `docs/plans/2026-04-24-prop-firm-operator-core-economic-simulation.md`
 - `docs/plans/2026-04-24-prop-firm-operator-simulation-formula-v0.md`
+- `docs/plans/2026-04-24-prop-firm-operator-simulation-calibration-log.md`
 - `docs/plans/2026-04-24-prop-firm-operator-numeric-balancing-notes.md`
 - `docs/plans/2026-04-24-prop-firm-operator-paper-sim-sheet-spec.md`
 - `docs/plans/2026-04-24-prop-firm-operator-route-tuning-matrix.md`

@@ -1,7 +1,7 @@
 # Prop Firm Operator Prototype - README Draft
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-scaffold
 
 ## 用途
 

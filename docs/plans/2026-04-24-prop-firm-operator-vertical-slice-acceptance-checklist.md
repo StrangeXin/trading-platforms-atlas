@@ -1,7 +1,7 @@
 # Prop Firm Operator - Vertical Slice Acceptance Checklist
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-playtest
 
 ## 核心判断
 

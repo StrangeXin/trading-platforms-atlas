@@ -1,7 +1,7 @@
 # Prop Firm Operator - Asset Production System
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-assets
 
 ## Purpose
 

@@ -1,7 +1,7 @@
 # Prop Firm Operator - Prototype UI System Spec
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-ui
 
 ## 核心判断
 

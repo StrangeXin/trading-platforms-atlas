@@ -1,7 +1,7 @@
 # Prop Firm Operator — Prototype Build Order
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-control
 
 ## 核心判断
 

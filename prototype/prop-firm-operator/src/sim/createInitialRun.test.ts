@@ -14,10 +14,14 @@ describe("createInitialRun", () => {
 
     expect(run.currentWeek).toBe(1);
     expect(run.status).toBe("active");
-    expect(run.resources.flow).toBe(90);
-    expect(run.resources.trust).toBe(49);
-    expect(run.counters.winnerVisibility).toBe(15);
+    expect(run.resources.flow).toBe(84);
+    expect(run.resources.trust).toBe(52);
+    expect(run.resources.regulatoryHeat).toBe(20);
+    expect(run.counters.winnerVisibility).toBe(11);
     expect(run.snapshots).toHaveLength(0);
+    expect(run.audience.novice).toBeCloseTo(0.62);
+    expect(run.audience.gambler).toBeCloseTo(0.28);
+    expect(run.audience.skilled).toBeCloseTo(0.1);
     expect(run.audience.novice + run.audience.gambler + run.audience.skilled).toBeCloseTo(1);
   });
 });

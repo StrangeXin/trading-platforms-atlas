@@ -1,7 +1,7 @@
 # Prop Firm Operator - Alt Payment Manual Fulfillment Spec
 
 Date: 2026-04-24
-Status: exploration
+Status: phase2-commercial
 
 ## Core Decision
 

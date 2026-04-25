@@ -1,7 +1,7 @@
 # Prop Firm Operator - Build Decision Memo
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-control
 
 ## Decision
 

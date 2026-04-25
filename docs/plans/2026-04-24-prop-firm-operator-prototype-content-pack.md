@@ -1,7 +1,7 @@
 # Prop Firm Operator — Prototype Content Pack
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-content
 
 ## 核心判断
 

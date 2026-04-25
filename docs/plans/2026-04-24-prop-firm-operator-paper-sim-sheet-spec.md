@@ -1,7 +1,7 @@
 # Prop Firm Operator — Paper Sim Sheet Spec
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-sim
 
 ## 核心判断
 
