@@ -1,7 +1,14 @@
 # Prop Firm Operator - Simulation Formula v0
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-sim
+
+> **Note (2026-04-24 — first calibration pass)**: 本文档描述的系数是第一版
+> **设计建议**，不是当前代码的精确值。原型首次实装后跑 `npm run tune` 发现
+> 三条路线的关键指标 54% 落在目标带外。已在 `src/sim/formula.ts` 应用
+> 软饱和、均值回归、反馈回路打断等调整。具体系数变化与剩余偏差记录在
+> `prop-firm-operator-simulation-calibration-log.md`。读本文档做实装或二次
+> 调参前，务必对照校准日志。
 
 ## 核心判断
 
