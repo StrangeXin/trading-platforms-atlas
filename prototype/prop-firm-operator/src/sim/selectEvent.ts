@@ -53,6 +53,9 @@ function isEligible(state: RunState, event: EventCard) {
   if (state.triggeredEventIds.includes(event.id)) return false;
   if (event.minWeek && state.currentWeek < event.minWeek) return false;
   if (event.maxWeek && state.currentWeek > event.maxWeek) return false;
+  // Scripted-week events (minWeek === maxWeek) are directorial beats.
+  // They ignore `trigger` conditions and always fire on their pinned week.
+  // See docs/plans/.../playable-run-spec §"固定事件".
   if (event.minWeek === event.maxWeek && state.currentWeek === event.minWeek) {
     return true;
   }

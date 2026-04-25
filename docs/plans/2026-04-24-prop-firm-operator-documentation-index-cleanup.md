@@ -1,7 +1,7 @@
 # Prop Firm Operator - Documentation Index Cleanup
 
 Date: 2026-04-24
-Status: exploration
+Status: meta
 
 ## 核心判断
 

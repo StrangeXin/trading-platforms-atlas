@@ -7,23 +7,23 @@ export const initialRunSeed: InitialRunSeed = {
   maxWeeks: 12,
   resources: {
     cash: 62,
-    flow: 74,
+    flow: 68,
     passRate: 11,
     payoutLiability: 14,
-    trust: 48,
+    trust: 51,
     regulatoryHeat: 22,
   },
   counters: {
     complaintEcho: 8,
-    winnerVisibility: 6,
+    winnerVisibility: 2,
     promoDebt: 0,
     processorPatience: 70,
     skilledCluster: 5,
   },
   audience: {
     novice: 0.58,
-    gambler: 0.3,
-    skilled: 0.12,
+    gambler: 0.26,
+    skilled: 0.16,
   },
   controls: {
     challengeFee: 3,

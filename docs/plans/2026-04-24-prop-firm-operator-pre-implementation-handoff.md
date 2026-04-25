@@ -1,7 +1,7 @@
 # Prop Firm Operator - Pre-Implementation Handoff
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-control
 
 ## Purpose
 

@@ -1,7 +1,7 @@
 # Prop Firm Operator — Meta Progression
 
 Date: 2026-04-24
-Status: exploration
+Status: post-v0
 
 ## 核心判断
 

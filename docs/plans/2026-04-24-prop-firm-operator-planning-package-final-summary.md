@@ -1,7 +1,7 @@
 # Prop Firm Operator - Planning Package Final Summary
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-control
 
 ## One-Line Summary
 

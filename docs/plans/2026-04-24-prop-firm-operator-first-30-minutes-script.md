@@ -1,7 +1,7 @@
 # Prop Firm Operator — First 30 Minutes Script
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-content
 
 ## 核心判断
 

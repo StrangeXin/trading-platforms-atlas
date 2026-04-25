@@ -4,6 +4,7 @@ import {
   clampPassRate,
   levelBias,
   normalizeAudience,
+  softenDelta,
 } from "./clamp";
 
 function unlockedControls(controls: PlayerControls): Required<PlayerControls> {
@@ -21,6 +22,11 @@ export function calculateWeek(state: RunState): FormulaResult {
   const countersStart = state.counters;
   const audienceStart = state.audience;
   const controls = unlockedControls(state.controls);
+  // Week 1-3 (temptation phase) damper: per numeric-balancing red line "不应
+  // 该太早吃到严重惩罚". Applied only to tone-driven backlash so that low-tone
+  // routes (Rational Tightening) still build complaint/heat at their normal
+  // pace, while aggressive marketing's payback is naturally delayed.
+  const temptationDamper = state.currentWeek <= 3 ? 0.55 : 1;
 
   const feeBias = levelBias(controls.challengeFee);
   const targetBias = levelBias(controls.profitTarget);
@@ -101,8 +107,8 @@ export function calculateWeek(state: RunState): FormulaResult {
     signups * 0.035 +
     countersStart.complaintEcho * 0.22 +
     countersStart.promoDebt * 0.18;
-  const splitMultiplier = 0.75 + splitBias * 0.12;
-  const payoutCost = successfulPayouts * splitMultiplier * 1.4;
+  const splitMultiplier = 0.75 + splitBias * 0.15;
+  const payoutCost = successfulPayouts * splitMultiplier * 1.25;
   const coldFunnelCost = Math.max(0, 60 - resourcesStart.flow) * 0.25;
   const quietBrandCost = Math.max(0, -toneBias) * 4;
   const cashDelta =
@@ -114,12 +120,21 @@ export function calculateWeek(state: RunState): FormulaResult {
     quietBrandCost;
 
   const flowDelta =
-    toneBias * 5 +
-    countersStart.winnerVisibility * 0.08 +
+    toneBias * 3.5 +
+    countersStart.winnerVisibility * 0.035 +
     resourcesStart.trust * 0.04 -
     resourcesStart.regulatoryHeat * 0.06 -
-    feeBias * 3 -
+    feeBias * 1.2 -
     countersStart.complaintEcho * 0.04;
+  // Asymmetric flow reversion. Floor recovery up to 50 keeps Rational
+  // Tightening's funnel above the "depleted zone" red line (Flow ≥ 25 per
+  // numeric-balancing.md). Ceiling above 90 cools saturated funnels.
+  const flowReversion =
+    resourcesStart.flow < 50
+      ? (50 - resourcesStart.flow) * 0.18
+      : resourcesStart.flow > 90
+        ? (60 - resourcesStart.flow) * 0.15
+        : (52 - resourcesStart.flow) * 0.04;
 
   const passRateDelta =
     -targetBias * 0.35 +
@@ -130,41 +145,70 @@ export function calculateWeek(state: RunState): FormulaResult {
   const payoutLiabilityDelta =
     passes * 0.22 +
     payoutRequests * 0.45 +
-    audience.skilled * 6 +
-    countersStart.winnerVisibility * 0.05 +
-    splitBias * 2 -
-    successfulPayouts * 0.35;
+    audience.skilled * 3.5 +
+    countersStart.winnerVisibility * 0.03 +
+    splitBias * 1.2 -
+    successfulPayouts * 0.55;
+  // Write-down reversion: high liability naturally sheds through exits,
+  // settlements, user attrition. Only engages above 60 so low-liability
+  // routes still feel it build up organically.
+  const payoutLiabilityReversion =
+    resourcesStart.payoutLiability > 60
+      ? (45 - resourcesStart.payoutLiability) * 0.05
+      : 0;
 
   let trustDelta =
-    successfulPayouts * 0.55 +
-    splitBias * 1.8 +
+    successfulPayouts * 0.22 +
+    splitBias * 1.2 +
     drawdownBias * 1 +
-    -countersStart.complaintEcho * 0.12 -
-    toneBias * 1.8 -
+    -countersStart.complaintEcho * 0.08 -
+    Math.max(0, toneBias) * 1.2 * temptationDamper -
+    Math.max(0, -toneBias) * 1.2 -
     Math.max(0, -cashDelta) * 0.08 -
-    resourcesStart.regulatoryHeat * 0.04;
+    resourcesStart.regulatoryHeat * 0.025 -
+    Math.max(0, resourcesStart.payoutLiability - 30) * 0.08;
+  // Mean-reversion toward 35: strong enough to keep trust off 0/100 under
+  // heavy formula damage, but gentle enough to let route differentiation
+  // drive the Week 12 diagnosis mix. Stronger pull below 35 helps both Dirty
+  // Growth and Rational Tightening land in the matrix 18-36 cracked-zone band.
+  const trustReversion =
+    resourcesStart.trust < 35
+      ? (35 - resourcesStart.trust) * 0.2
+      : (35 - resourcesStart.trust) * 0.06;
 
-  if (state.flags.reviewsTightened) trustDelta -= 3;
-  if (countersStart.processorPatience < 45) trustDelta -= 2;
+  if (state.flags.reviewsTightened) trustDelta -= 1;
+  if (countersStart.processorPatience < 45) trustDelta -= 1;
 
   const regulatoryHeatDelta =
-    toneBias * 2.4 +
-    countersStart.complaintEcho * 0.1 +
-    Math.max(0, 50 - resourcesStart.trust) * 0.05 +
-    Math.max(0, resourcesStart.payoutLiability - 40) * 0.04 -
-    Math.max(0, 65 - resourcesStart.regulatoryHeat) * 0.02;
+    Math.max(0, toneBias) * 2.0 * temptationDamper +
+    Math.min(0, toneBias) * 2.0 +
+    countersStart.complaintEcho * 0.05 +
+    Math.min(25, Math.max(0, 50 - resourcesStart.trust)) * 0.05 +
+    Math.max(0, resourcesStart.payoutLiability - 40) * 0.04;
+  // Heat cools gently when low, very aggressively when saturated. The 78
+  // threshold matches the matrix Week 12 ceiling — once heat enters that
+  // territory, regulatory drag accelerates, just like real prop firms losing
+  // payment processors and KOL channels in cascade.
+  const regulatoryHeatReversion =
+    resourcesStart.regulatoryHeat > 78
+      ? (55 - resourcesStart.regulatoryHeat) * 0.30
+      : resourcesStart.regulatoryHeat > 60
+        ? (45 - resourcesStart.regulatoryHeat) * 0.10
+        : resourcesStart.regulatoryHeat > 45
+          ? (40 - resourcesStart.regulatoryHeat) * 0.04
+          : (38 - resourcesStart.regulatoryHeat) * 0.03;
 
   const newComplaints =
-    Math.max(0, 10 - effectivePassRate) * 0.9 +
-    Math.max(0, toneBias) * 2.2 +
-    Math.max(0, 45 - resourcesStart.trust) * 0.08 +
-    supportCost * 0.25 +
+    Math.max(0, 10 - effectivePassRate) * 1.1 +
+    Math.max(0, toneBias) * 2.2 * temptationDamper +
+    Math.max(0, 45 - resourcesStart.trust) * 0.15 +
+    supportCost * 0.14 +
     countersStart.promoDebt * 0.12;
 
   const newWinnerSignal =
-    successfulPayouts * 1.8 +
-    Math.max(0, resourcesStart.trust - 50) * 0.06 +
-    Math.max(0, splitBias) * 2;
+    successfulPayouts * 0.7 +
+    Math.max(0, resourcesStart.trust - 50) * 0.04 +
+    Math.max(0, splitBias) * 1.2;
 
   const processorPatienceDelta =
     -resourcesStart.regulatoryHeat * 0.08 -
@@ -182,20 +226,33 @@ export function calculateWeek(state: RunState): FormulaResult {
   return {
     resources: {
       cash: clamp100(resourcesStart.cash + cashDelta * 0.55),
-      flow: clamp100(resourcesStart.flow + flowDelta),
+      flow: clamp100(
+        resourcesStart.flow +
+          softenDelta(resourcesStart.flow, flowDelta, 35) +
+          flowReversion,
+      ),
       passRate: clampPassRate(resourcesStart.passRate + passRateDelta),
       payoutLiability: clamp100(
-        resourcesStart.payoutLiability + payoutLiabilityDelta,
+        resourcesStart.payoutLiability +
+          softenDelta(resourcesStart.payoutLiability, payoutLiabilityDelta, 40) +
+          payoutLiabilityReversion,
       ),
-      trust: clamp100(resourcesStart.trust + trustDelta),
+      trust: clamp100(
+        resourcesStart.trust +
+          softenDelta(resourcesStart.trust, trustDelta, 35) +
+          trustReversion,
+      ),
       regulatoryHeat: clamp100(
-        resourcesStart.regulatoryHeat + regulatoryHeatDelta,
+        resourcesStart.regulatoryHeat +
+          softenDelta(resourcesStart.regulatoryHeat, regulatoryHeatDelta, 35) +
+          regulatoryHeatReversion,
       ),
     },
     counters: {
       complaintEcho: clamp100(countersStart.complaintEcho * 0.72 + newComplaints),
       winnerVisibility: clamp100(
-        countersStart.winnerVisibility * 0.78 + newWinnerSignal,
+        countersStart.winnerVisibility * 0.66 +
+          softenDelta(countersStart.winnerVisibility, newWinnerSignal, 40),
       ),
       promoDebt: clamp100(countersStart.promoDebt * 0.68 + Math.max(0, toneBias) * 1.8),
       processorPatience: clamp100(

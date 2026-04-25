@@ -8,17 +8,37 @@ import type {
   RunFlags,
   RunState,
 } from "./types";
-import { clamp100, clampPassRate, normalizeAudience } from "./clamp";
+import { clamp100, clampPassRate, normalizeAudience, softenEventDelta } from "./clamp";
+
+// Resources/counters that soften event deltas near the 0/100 edges so the
+// final 15 points behave like diminishing returns. Cash and promoDebt stay
+// raw — their designed feel is "you chose this, you pay full price".
+const SOFTENED_RESOURCES = new Set<ResourceKey>([
+  "trust",
+  "flow",
+  "regulatoryHeat",
+  "payoutLiability",
+]);
+const SOFTENED_COUNTERS = new Set<CounterKey>([
+  "winnerVisibility",
+  "complaintEcho",
+  "skilledCluster",
+]);
 
 function applyResourceEffect(
   resources: Resources,
   key: ResourceKey,
   delta: number,
 ) {
-  const value = resources[key] + delta;
+  if (key === "passRate") {
+    return { ...resources, passRate: clampPassRate(resources.passRate + delta) };
+  }
+  const softenedDelta = SOFTENED_RESOURCES.has(key)
+    ? softenEventDelta(resources[key], delta)
+    : delta;
   return {
     ...resources,
-    [key]: key === "passRate" ? clampPassRate(value) : clamp100(value),
+    [key]: clamp100(resources[key] + softenedDelta),
   };
 }
 
@@ -27,9 +47,12 @@ function applyCounterEffect(
   key: CounterKey,
   delta: number,
 ) {
+  const softenedDelta = SOFTENED_COUNTERS.has(key)
+    ? softenEventDelta(counters[key], delta)
+    : delta;
   return {
     ...counters,
-    [key]: clamp100(counters[key] + delta),
+    [key]: clamp100(counters[key] + softenedDelta),
   };
 }
 

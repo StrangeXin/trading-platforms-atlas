@@ -22,7 +22,6 @@ export const scenarios: Scenario[] = [
     eventWeightMods: {
       weekend_promo_temptation: 1.25,
       viral_winner_thread: 1.2,
-      kol_wants_exclusivity: 1.15,
     },
     digestTitlePool: [
       "Everyone Looks Smarter in This Market",

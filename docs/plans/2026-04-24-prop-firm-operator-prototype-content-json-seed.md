@@ -1,7 +1,7 @@
 # Prop Firm Operator - Prototype Content JSON Seed
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-content
 
 ## 核心判断
 
@@ -79,7 +79,7 @@ export const scenarios = [
     eventWeightMods: {
       weekend_promo_temptation: 1.25,
       viral_winner_thread: 1.2,
-      kol_wants_exclusivity: 1.15,
+      // kol_wants_exclusivity is post-v0 (see prototype-backlog-icebox); not wired for prototype v0
     },
     digestTitlePool: [
       "Everyone Looks Smarter in This Market",

@@ -1,7 +1,7 @@
 # Prop Firm Operator — Visual & Interaction Style
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-ui
 
 ## Update
 

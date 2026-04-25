@@ -1,7 +1,7 @@
 # Prop Firm Operator — Scenario Unlocks
 
 Date: 2026-04-24
-Status: exploration
+Status: post-v0
 
 ## 核心判断
 

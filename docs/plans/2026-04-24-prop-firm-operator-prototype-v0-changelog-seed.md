@@ -1,7 +1,7 @@
 # Prop Firm Operator - Prototype v0 Changelog Seed
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-scaffold
 
 ## Purpose
 

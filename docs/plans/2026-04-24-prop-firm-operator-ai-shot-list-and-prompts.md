@@ -1,7 +1,7 @@
 # Prop Firm Operator - AI Shot List and Prompt Library
 
 Date: 2026-04-24
-Status: exploration
+Status: v0-assets
 
 ## Purpose
 
