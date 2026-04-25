@@ -83,9 +83,18 @@ describe("calibration guardrails", () => {
   });
 
   it("keeps out-of-band metric count within calibration budget", () => {
-    // Baseline captured 2026-04-24 after Pass 15: 37.
+    // Baseline captured 2026-04-25 after Pass D-F: 48 across 4 scripted routes
+    // (Dirty / Pragmatic / Fair / Rational). The added Pragmatic Dirty route
+    // expanded the matrix coverage; per-route average remains around 12.
     // Raise ceiling cautiously; lowering it indicates real progress.
     const issues = reportTuning();
-    expect(issues.length).toBeLessThanOrEqual(42);
+    expect(issues.length).toBeLessThanOrEqual(54);
+  });
+
+  it("produces three distinct ending diagnoses across scripted routes", () => {
+    const kinds = new Set(
+      runs.map((run) => run.state.diagnosis?.type).filter(Boolean),
+    );
+    expect(kinds.size).toBeGreaterThanOrEqual(3);
   });
 });

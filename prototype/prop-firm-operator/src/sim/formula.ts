@@ -6,6 +6,7 @@ import {
   normalizeAudience,
   softenDelta,
 } from "./clamp";
+import { defaultTuningConfig, type TuningConfig } from "./tuningConfig";
 
 function unlockedControls(controls: PlayerControls): Required<PlayerControls> {
   return {
@@ -17,7 +18,10 @@ function unlockedControls(controls: PlayerControls): Required<PlayerControls> {
   };
 }
 
-export function calculateWeek(state: RunState): FormulaResult {
+export function calculateWeek(
+  state: RunState,
+  tuning: TuningConfig = defaultTuningConfig,
+): FormulaResult {
   const resourcesStart = state.resources;
   const countersStart = state.counters;
   const audienceStart = state.audience;
@@ -26,7 +30,7 @@ export function calculateWeek(state: RunState): FormulaResult {
   // 该太早吃到严重惩罚". Applied only to tone-driven backlash so that low-tone
   // routes (Rational Tightening) still build complaint/heat at their normal
   // pace, while aggressive marketing's payback is naturally delayed.
-  const temptationDamper = state.currentWeek <= 3 ? 0.55 : 1;
+  const temptationDamper = state.currentWeek <= 3 ? tuning.temptationDamper : 1;
 
   const feeBias = levelBias(controls.challengeFee);
   const targetBias = levelBias(controls.profitTarget);
@@ -107,8 +111,8 @@ export function calculateWeek(state: RunState): FormulaResult {
     signups * 0.035 +
     countersStart.complaintEcho * 0.22 +
     countersStart.promoDebt * 0.18;
-  const splitMultiplier = 0.75 + splitBias * 0.15;
-  const payoutCost = successfulPayouts * splitMultiplier * 1.25;
+  const splitMultiplier = 0.75 + splitBias * tuning.splitMultiplierSlope;
+  const payoutCost = successfulPayouts * splitMultiplier * tuning.payoutCostMultiplier;
   const coldFunnelCost = Math.max(0, 60 - resourcesStart.flow) * 0.25;
   const quietBrandCost = Math.max(0, -toneBias) * 4;
   const cashDelta =
@@ -131,10 +135,10 @@ export function calculateWeek(state: RunState): FormulaResult {
   // numeric-balancing.md). Ceiling above 90 cools saturated funnels.
   const flowReversion =
     resourcesStart.flow < 50
-      ? (50 - resourcesStart.flow) * 0.18
+      ? (50 - resourcesStart.flow) * tuning.flowReversionLowK
       : resourcesStart.flow > 90
-        ? (60 - resourcesStart.flow) * 0.15
-        : (52 - resourcesStart.flow) * 0.04;
+        ? (60 - resourcesStart.flow) * tuning.flowReversionHighK
+        : (52 - resourcesStart.flow) * tuning.flowReversionMidK;
 
   const passRateDelta =
     -targetBias * 0.35 +
@@ -161,20 +165,21 @@ export function calculateWeek(state: RunState): FormulaResult {
     successfulPayouts * 0.22 +
     splitBias * 1.2 +
     drawdownBias * 1 +
-    -countersStart.complaintEcho * 0.08 -
+    -countersStart.complaintEcho * 0.06 -
     Math.max(0, toneBias) * 1.2 * temptationDamper -
     Math.max(0, -toneBias) * 1.2 -
     Math.max(0, -cashDelta) * 0.08 -
-    resourcesStart.regulatoryHeat * 0.025 -
-    Math.max(0, resourcesStart.payoutLiability - 30) * 0.08;
+    resourcesStart.regulatoryHeat * 0.018 -
+    Math.max(0, resourcesStart.payoutLiability - 30) *
+      tuning.payoutLiabilityTrustDrag;
   // Mean-reversion toward 35: strong enough to keep trust off 0/100 under
   // heavy formula damage, but gentle enough to let route differentiation
   // drive the Week 12 diagnosis mix. Stronger pull below 35 helps both Dirty
   // Growth and Rational Tightening land in the matrix 18-36 cracked-zone band.
   const trustReversion =
     resourcesStart.trust < 35
-      ? (35 - resourcesStart.trust) * 0.2
-      : (35 - resourcesStart.trust) * 0.06;
+      ? (35 - resourcesStart.trust) * tuning.trustReversionLowK
+      : (35 - resourcesStart.trust) * tuning.trustReversionHighK;
 
   if (state.flags.reviewsTightened) trustDelta -= 1;
   if (countersStart.processorPatience < 45) trustDelta -= 1;
@@ -191,12 +196,12 @@ export function calculateWeek(state: RunState): FormulaResult {
   // payment processors and KOL channels in cascade.
   const regulatoryHeatReversion =
     resourcesStart.regulatoryHeat > 78
-      ? (55 - resourcesStart.regulatoryHeat) * 0.30
+      ? (55 - resourcesStart.regulatoryHeat) * tuning.regHeatReversionVeryHighK
       : resourcesStart.regulatoryHeat > 60
-        ? (45 - resourcesStart.regulatoryHeat) * 0.10
+        ? (45 - resourcesStart.regulatoryHeat) * tuning.regHeatReversionHighK
         : resourcesStart.regulatoryHeat > 45
-          ? (40 - resourcesStart.regulatoryHeat) * 0.04
-          : (38 - resourcesStart.regulatoryHeat) * 0.03;
+          ? (40 - resourcesStart.regulatoryHeat) * tuning.regHeatReversionMidK
+          : (38 - resourcesStart.regulatoryHeat) * tuning.regHeatReversionLowK;
 
   const newComplaints =
     Math.max(0, 10 - effectivePassRate) * 1.1 +

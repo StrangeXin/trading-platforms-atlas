@@ -14,8 +14,12 @@ export function isControlLocked(key: ControlKey, week: number) {
 }
 
 export function unlockReason(key: ControlKey) {
-  if (key === "maxDrawdown") return "Unlocks in Week 2";
-  if (key === "payoutSplit") return "Unlocks in Week 4";
+  // Per playable-run-spec: each lever unlocks when its consequence chain is
+  // about to become legible to the player.
+  if (key === "maxDrawdown")
+    return "Unlocks Week 2 — once cohort quality starts to drift, you'll need a real failure dial.";
+  if (key === "payoutSplit")
+    return "Unlocks Week 4 — winners are about to enter; brand becomes a price tag.";
   return "";
 }
 

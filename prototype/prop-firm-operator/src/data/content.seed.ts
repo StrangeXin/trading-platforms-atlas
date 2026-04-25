@@ -1,42 +1,16 @@
 import type { EndingType, ResourceKey } from "../sim/types";
+import { zoneFor } from "../sim/resourceZones";
 
-export const statusLabels: Record<ResourceKey, Array<{ min: number; label: string }>> = {
-  cash: [
-    { min: 80, label: "Strong" },
-    { min: 55, label: "Comfortable" },
-    { min: 35, label: "Tight" },
-    { min: 0, label: "Bleeding" },
-  ],
-  flow: [
-    { min: 75, label: "Hot" },
-    { min: 50, label: "Rising" },
-    { min: 30, label: "Cooling" },
-    { min: 0, label: "Drying" },
-  ],
-  passRate: [
-    { min: 25, label: "Leaking" },
-    { min: 16, label: "Loose" },
-    { min: 8, label: "Engineered" },
-    { min: 0, label: "Tight" },
-  ],
-  payoutLiability: [
-    { min: 65, label: "Critical" },
-    { min: 40, label: "Loaded" },
-    { min: 20, label: "Building" },
-    { min: 0, label: "Low" },
-  ],
-  trust: [
-    { min: 70, label: "Stable" },
-    { min: 45, label: "Mixed" },
-    { min: 25, label: "Slipping" },
-    { min: 0, label: "Poisoned" },
-  ],
-  regulatoryHeat: [
-    { min: 65, label: "Closing In" },
-    { min: 40, label: "Watching" },
-    { min: 20, label: "Warm" },
-    { min: 0, label: "Quiet" },
-  ],
+// Thin shim around resourceZones so existing buildDigest call sites keep
+// working. Single source of truth for band labels lives in resourceZones.ts;
+// see numeric-balancing-notes.md "六大资源的危险区间设计".
+export const statusLabels: Record<ResourceKey, (value: number) => string> = {
+  cash: (v) => zoneFor("cash", v).label,
+  flow: (v) => zoneFor("flow", v).label,
+  passRate: (v) => zoneFor("passRate", v).label,
+  payoutLiability: (v) => zoneFor("payoutLiability", v).label,
+  trust: (v) => zoneFor("trust", v).label,
+  regulatoryHeat: (v) => zoneFor("regulatoryHeat", v).label,
 };
 
 export const weeklyDigestTitleSeeds = [

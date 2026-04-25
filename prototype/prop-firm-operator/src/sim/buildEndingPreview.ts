@@ -4,7 +4,15 @@ import type { EndingPreview, EndingType, RunState } from "./types";
 function selectEndingType(state: RunState): EndingType {
   const { cash, payoutLiability, regulatoryHeat, trust } = state.resources;
 
-  if (trust <= 25) return "trust_collapse_preview";
+  // Most specific patterns first. A run that ended with "cash up, trust gone"
+  // is structurally `dirty_momentum` — the player won the money game and lost
+  // the belief game. That's a different story from `trust_collapse_preview`,
+  // which describes a run that simply failed on belief without the cash win.
+  if (cash >= 65 && trust <= 42) return "dirty_momentum";
+
+  // trust < 25 is the "corrupt zone" per numeric-balancing notes (0-24).
+  // 25-44 is cracked but not yet collapsed.
+  if (trust < 25) return "trust_collapse_preview";
 
   if (payoutLiability >= 55 && cash <= 45) {
     return "payout_shock_preview";
@@ -15,8 +23,6 @@ function selectEndingType(state: RunState): EndingType {
   if (trust >= 55 && payoutLiability >= 42) {
     return "credibility_is_expensive";
   }
-
-  if (cash >= 65 && trust <= 42) return "dirty_momentum";
 
   return "crowd_still_believes";
 }

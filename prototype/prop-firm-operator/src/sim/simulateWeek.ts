@@ -5,6 +5,7 @@ import { buildEndingPreview } from "./buildEndingPreview";
 import { calculateWeek } from "./formula";
 import { resolveEvent } from "./resolveEvent";
 import { selectEvent } from "./selectEvent";
+import { defaultTuningConfig, type TuningConfig } from "./tuningConfig";
 import type {
   DelayedEffect,
   EventCard,
@@ -20,6 +21,7 @@ type SimulateWeekOptions = {
   events?: EventCard[];
   controls?: Partial<PlayerControls>;
   chooseOption?: (event: EventCard, state: RunState) => EventOption["id"];
+  tuningConfig?: TuningConfig;
 };
 
 function phaseForWeek(week: number): WeekPhase {
@@ -44,6 +46,37 @@ function applyDueDelayedEffects(state: RunState) {
   return { state: next, applied: due };
 }
 
+/**
+ * Returns the event that would trigger if `simulateWeek(state, { controls })`
+ * were called next. Pure: never mutates the input state. Use in UI flows
+ * to decide whether to open an event modal before committing the week.
+ *
+ * Without this, range-trigger events (e.g. feels_rigged_forum_post Week 5-9)
+ * silently fail in the player UI: simulateWeek selects them, but with no
+ * chooseOption callback they're never resolved, so the player never sees
+ * the modal even though the trigger fired.
+ */
+export function peekWeekEvent(
+  state: RunState,
+  options: Pick<SimulateWeekOptions, "events" | "controls" | "tuningConfig"> = {},
+): EventCard | undefined {
+  if (state.status === "ended") return undefined;
+  const events = options.events ?? eventCards;
+  const stateWithControls = options.controls
+    ? { ...state, controls: { ...state.controls, ...options.controls } }
+    : state;
+  const tuning = options.tuningConfig ?? defaultTuningConfig;
+  const { state: delayedState } = applyDueDelayedEffects(stateWithControls);
+  const result = calculateWeek(delayedState, tuning);
+  const formulaState: RunState = {
+    ...delayedState,
+    resources: result.resources,
+    counters: result.counters,
+    audience: result.audience,
+  };
+  return selectEvent(formulaState, events).event;
+}
+
 export function simulateWeek(state: RunState, options: SimulateWeekOptions = {}) {
   if (state.status === "ended") {
     return state;
@@ -57,8 +90,9 @@ export function simulateWeek(state: RunState, options: SimulateWeekOptions = {})
   const resourcesStart = { ...stateWithControls.resources };
   const countersStart = { ...stateWithControls.counters };
   const audienceStart = { ...stateWithControls.audience };
+  const tuning = options.tuningConfig ?? defaultTuningConfig;
   const { state: delayedState, applied } = applyDueDelayedEffects(stateWithControls);
-  const result = calculateWeek(delayedState);
+  const result = calculateWeek(delayedState, tuning);
   const formulaState: RunState = {
     ...delayedState,
     resources: result.resources,
